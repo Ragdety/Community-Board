@@ -7,13 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{000C9E2D-70C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{27C9EDAE-C68F-4953-A7C5-5FB4060CE0DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunityBoard.BackEnd", "CommunityBoard.BackEnd\CommunityBoard.BackEnd.csproj", "{741C2D79-8999-40DE-B296-3C66D4E3B195}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityBoard.BackEnd", "CommunityBoard.BackEnd\CommunityBoard.BackEnd.csproj", "{741C2D79-8999-40DE-B296-3C66D4E3B195}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunityBoard.FrontEnd", "CommunityBoard.FrontEnd\CommunityBoard.FrontEnd.csproj", "{5F71CAAF-4AF5-4FE0-9A4E-91F80C58D760}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityBoard.FrontEnd", "CommunityBoard.FrontEnd\CommunityBoard.FrontEnd.csproj", "{5F71CAAF-4AF5-4FE0-9A4E-91F80C58D760}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunityBoard.Core", "CommunityBoard.Core\CommunityBoard.Core.csproj", "{7A0F878C-2925-4217-B963-7ABE850480DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityBoard.Core", "CommunityBoard.Core\CommunityBoard.Core.csproj", "{7A0F878C-2925-4217-B963-7ABE850480DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunityBoard.Test", "CommunityBoard.Test\CommunityBoard.Test.csproj", "{BF70B1A2-6DC1-45C7-847C-5A76104CEDDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityBoard.Test", "CommunityBoard.Test\CommunityBoard.Test.csproj", "{BF70B1A2-6DC1-45C7-847C-5A76104CEDDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

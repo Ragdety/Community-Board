@@ -1,0 +1,76 @@
+﻿@page
+@model CommunityBoard.FrontEnd.Pages.Authentication.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<link rel="stylesheet" href="~/css/custom.css" />
+
+<section>
+    <div class="signup-form">
+        <form method="POST" autocomplete="off">
+            <h2>Register</h2>
+            <p>Please fill in this form to create an account!</p>
+            <hr>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <input type="text"
+                               class="form-control"
+                               name="first_name"
+                               placeholder="First Name"
+                               required>
+                    </div>
+                    <div class="col">
+                        <input type="text"
+                               class="form-control"
+                               name="last_name"
+                               placeholder="Last Name"
+                               required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="email"
+                       class="form-control"
+                       name="email"
+                       placeholder="Email"
+                       required>
+            </div>
+            <div class="form-group">
+                <input type="password"
+                       class="form-control"
+                       name="password"
+                       placeholder="Password"
+                       required>
+            </div>
+            <div class="form-group">
+                <input type="password"
+                       class="form-control"
+                       name="confirm_password"
+                       placeholder="Confirm Password"
+                       required>
+            </div>
+            <div class="form-group">
+                <label class="form-check-label">
+                    <input type="checkbox" required="required">
+
+                    I accept the
+                    <a asp-page="/Terms">Terms of Use</a> &amp;
+                    <a asp-page="/Privacy">Privacy Policy</a>
+                </label>
+            </div>
+            <div class="form-group">
+                <button type="submit"
+                        class="btn btn-primary btn-lg transition-opacity">
+                    Register
+                </button>
+            </div>
+            <hr />
+            <div class="hint-text text-black">
+                Already have an account?
+                <a asp-page="/Authentication/Login" class="text-black-50 text-primary">Login here</a>
+            </div>
+        </form>
+    </div>
+</section>

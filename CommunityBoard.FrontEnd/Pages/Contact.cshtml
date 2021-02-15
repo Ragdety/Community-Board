@@ -1,0 +1,44 @@
+﻿@page
+@model CommunityBoard.FrontEnd.Pages.ContactModel
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<link rel="stylesheet" href="~/css/custom.css" />
+
+<div class="d-flex justify-content-center">
+    <form method="POST"
+            autocomplete="off"
+            id="contact-author-form"
+            class="w-75 p-3 text-center signup-form ">
+        <h2>Contact (Author's Name Here)</h2>
+        <hr class="w-75 text-center m-auto pb-3"/>
+        <div class="form-group">
+            <input type="text"
+                    class="form-control"
+                    name="email-subject"
+                    placeholder="Subject"
+                    required>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control"
+                        name="email-body"
+                        required
+                        form="contact-author-form"
+                        placeholder="Email Body"
+                        rows="8"></textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit"
+                    class="btn btn-primary btn-lg transition-opacity">
+                Send
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+    textarea {
+        resize: none
+    }
+</style>

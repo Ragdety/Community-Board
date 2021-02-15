@@ -1,6 +1,8 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -70,79 +72,22 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
-/*Login css*/
 
-.my-login-page {
-    background-color: #f7f9fb;
-    font-size: 14px;
+/*Custom Fonts*/
+@font-face {
+    font-family: Lato-Regular;
+    src: url('../lib/Table_Fixed_Header/fonts/Lato/Lato-Regular.ttf');
 }
 
-.brand {
-    align-content: center;
-    align-items: center;
-    width: 90px;
-    height: 90px;
-    overflow: hidden;
-    border-radius: 50%;
-    margin: 40px auto;
-    box-shadow: 0 4px 8px rgba(0,0,0,.05);
-    position: relative;
-    z-index: 1;
+@font-face {
+    font-family: Lato-Bold;
+    src: url('.../lib/Table_Fixed_Header/fonts/Lato/Lato-Bold.ttf');
 }
 
-.my-login-page .brand img {
-    width: 100%;
+.lato-regular {
+    font-family: Lato-Regular;
 }
 
-.my-login-page .card-wrapper {
-    width: 400px;
+.lato-bold {
+    font-family: Lato-Bold;
 }
-
-.my-login-page .card {
-    border-color: transparent;
-    box-shadow: 0 4px 8px rgba(0,0,0,.05);
-}
-
-.my-login-page .card.fat {
-    padding: 10px;
-}
-
-.my-login-page .card .card-title {
-    margin-bottom: 30px;
-}
-
-.my-login-page .form-control {
-    border-width: 2.3px;
-}
-
-.my-login-page .form-group label {
-    width: 100%;
-}
-
-.my-login-page .btn.btn-block {
-    padding: 12px 10px;
-}
-
-.my-login-page .footer {
-    margin: 40px 0;
-    color: #888;
-    text-align: center;
-}
-
-@media screen and (max-width: 425px) {
-    .my-login-page .card-wrapper {
-        width: 90%;
-        margin: 0 auto;
-    }
-}
-
-@media screen and (max-width: 320px) {
-    .my-login-page .card.fat {
-        padding: 0;
-    }
-
-        .my-login-page .card.fat .card-body {
-            padding: 15px;
-        }
-}
-/*End Login Css*/
