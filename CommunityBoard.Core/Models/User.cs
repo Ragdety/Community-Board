@@ -32,5 +32,7 @@ namespace CommunityBoard.Core.Models
 
         [Required]
         public DateTime DateRegistered { get; set; }
+
+        public int? NumberOfReports { get; set; }
     }
 }
