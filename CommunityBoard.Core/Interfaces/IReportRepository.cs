@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CommunityBoard.Core.Models;
 
 namespace CommunityBoard.Core.Interfaces
 {
-    public interface IReportRepository
+    public interface IReportRepository : IGenericRepository<Report>
     {
-
+        
     }
 }
