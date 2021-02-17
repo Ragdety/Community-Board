@@ -7,8 +7,8 @@ namespace CommunityBoard.Core.Interfaces
     {
         public Task<TEntity> CreateAsync(TEntity entity);
         public Task<IList<TEntity>> FindAllAsync();
-        public Task<TEntity> FindAsync(int id);
-        public Task<bool> UpdateAsync(int id);
-        public Task<TEntity> DeleteAsync(int id);
+        public Task<TEntity> FindAsync(object id);
+        public Task<bool> UpdateAsync(object id);
+        public Task<TEntity> DeleteAsync(object id);
     }
 }

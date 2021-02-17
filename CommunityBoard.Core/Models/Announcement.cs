@@ -1,8 +1,6 @@
 ﻿using CommunityBoard.Core.Enums;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace CommunityBoard.Core.Models
 {
@@ -11,23 +9,23 @@ namespace CommunityBoard.Core.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(180)]
+        [Required(ErrorMessage = "Name Required")]
+        [MaxLength(80)]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Type Required")]
         public AnnouncementType Type { get; set; }
 
-        [Required]
-        [MaxLength(600)]
+        [Required(ErrorMessage = "Description Required")]
+        [MaxLength(300)]
         public string Description { get; set; }
 
         public AnnouncementImage Image { get; set; }
 
-        [Required]
-        public DateTime DatePosted { get; set; }
+        [Required(ErrorMessage = "Date Required")]
+        public DateTime CreatedAt { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "User Author Required")]
         public User User { get; set; }
     }
 }
