@@ -11,17 +11,17 @@ namespace CommunityBoard.Core.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(200)]
+        [MaxLength(100)]
         public string ReportCause { get; set; }
 
         [Required]
-        [MaxLength(500)]
+        [MaxLength(300)]
         public string ReportDescription { get; set; }
 
         [Required]
         public DateTime ReportDate { get; set; }
 
         [Required]
-        public Announcement Announcement { get; set; }
+        public int AnnouncementId { get; set; }
     }
 }

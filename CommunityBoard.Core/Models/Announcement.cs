@@ -1,5 +1,6 @@
 ﻿using CommunityBoard.Core.Enums;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CommunityBoard.Core.Models
@@ -25,7 +26,7 @@ namespace CommunityBoard.Core.Models
         [Required(ErrorMessage = "Date Required")]
         public DateTime CreatedAt { get; set; }
 
-        [Required(ErrorMessage = "User Author Required")]
-        public User User { get; set; }
+        [Required(ErrorMessage = "User Author Id Required")]
+        public int UserId { get; set; }
     }
 }
