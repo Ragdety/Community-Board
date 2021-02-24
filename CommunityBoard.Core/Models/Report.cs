@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace CommunityBoard.Core.Models
@@ -22,6 +23,8 @@ namespace CommunityBoard.Core.Models
         public DateTime ReportDate { get; set; }
 
         [Required]
+        [ForeignKey("AnnouncementFK")]
         public int AnnouncementId { get; set; }
+        public virtual Announcement Announcement { get; set; }
     }
 }

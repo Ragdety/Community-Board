@@ -11,12 +11,10 @@ namespace CommunityBoard.Core.Models
 
         [Required(ErrorMessage = "First name Required")]
         [MaxLength(500)]
-        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Last name Required")]
         [MaxLength(500)]
-        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Email Required")]
@@ -27,7 +25,6 @@ namespace CommunityBoard.Core.Models
         [MaxLength(255)]
         public string Password { get; set; }
 
-        [Display(Name = "Date of Registration")]
         [Required(ErrorMessage = "Date Required")]
         public DateTime DateRegistered { get; set; }
     }
