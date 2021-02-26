@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CommunityBoard.BackEnd.Contracts.V1;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CommunityBoard.BackEnd.Controllers.V1
 {
     public class AnnouncementsController : Controller
     {
-        [HttpGet("api/v1/announcements")]
+        [HttpGet(ApiRoutes.Announcements.GetAll)]
         public IActionResult GetAll()
         {
-            return Ok();
+            return Ok(new { name = "test" });
         }
     }
 }
