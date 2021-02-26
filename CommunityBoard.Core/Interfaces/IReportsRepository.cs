@@ -2,7 +2,7 @@
 
 namespace CommunityBoard.Core.Interfaces
 {
-    public interface IReportRepository : IGenericRepository<Report>
+    public interface IReportsRepository : IGenericRepository<Report>
     {
         
     }

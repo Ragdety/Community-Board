@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CommunityBoard.BackEnd.Repositories
 {
-    public class ReportRepository : IReportRepository
+    public class ReportsRepository : IReportsRepository
     {
         public Task<Report> CreateAsync(Report entity)
         {
