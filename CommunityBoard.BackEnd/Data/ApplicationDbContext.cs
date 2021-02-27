@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CommunityBoard.Core.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,5 +13,8 @@ namespace CommunityBoard.BackEnd.Data
             : base(options)
         {
         }
+
+        public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<Report> Reports { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CommunityBoard.Core.Enums;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,26 +12,26 @@ namespace CommunityBoard.Core.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Name Required")]
+        [Required]
         [MaxLength(80)]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Type Required")]
+        [Required]
         [Column(TypeName = "nvarchar(50)")]
         public AnnouncementType Type { get; set; }
 
-        [Required(ErrorMessage = "Description Required")]
+        [Required]
         [MaxLength(300)]
         public string Description { get; set; }
 
         public byte[] Image { get; set; }
 
-        [Required(ErrorMessage = "Date Required")]
+        [Required]
         public DateTime CreatedAt { get; set; }
 
-        [Required(ErrorMessage = "User Author Id Required")]
-        [ForeignKey("UserFK")]
+        [Required]
         public int UserId { get; set; }
-        public virtual User User { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public virtual IdentityUser User { get; set; }
     }
 }

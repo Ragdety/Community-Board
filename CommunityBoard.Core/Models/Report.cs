@@ -23,8 +23,8 @@ namespace CommunityBoard.Core.Models
         public DateTime ReportDate { get; set; }
 
         [Required]
-        [ForeignKey("AnnouncementFK")]
         public int AnnouncementId { get; set; }
+        [ForeignKey(nameof(AnnouncementId))]
         public virtual Announcement Announcement { get; set; }
     }
 }
