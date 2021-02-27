@@ -32,8 +32,7 @@ namespace CommunityBoard.BackEnd
                     Configuration.GetConnectionString("CommunityBoard")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,15 +53,20 @@ namespace CommunityBoard.BackEnd
 
             app.UseRouting();
 
+            app.UseCors(builder => builder
+                .WithOrigins(
+                    "https://localhost:3000"
+                )
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+            );
+
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }
