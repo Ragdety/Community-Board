@@ -15,7 +15,7 @@ namespace CommunityBoard.BackEnd.Installers
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("CommunityBoard")));
-            services.AddDefaultIdentity<User>(options => 
+            services.AddIdentity<User, IdentityRole<int>>(options => 
             {
                 options.Password.RequiredLength = 8;
                 options.Password.RequireLowercase = true;

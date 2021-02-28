@@ -6,8 +6,6 @@ namespace CommunityBoard.Core.Models
 {
     public class User : IdentityUser<int>
     {
-        [Key]
-        public override int Id { get; set; }
         [Required]
         [MaxLength(500)]
         public string FirstName { get; set; }

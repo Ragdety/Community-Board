@@ -32,6 +32,6 @@ namespace CommunityBoard.Core.Models
         [Required]
         public int UserId { get; set; }
         [ForeignKey(nameof(UserId))]
-        public virtual IdentityUser User { get; set; }
+        public virtual User User { get; set; }
     }
 }

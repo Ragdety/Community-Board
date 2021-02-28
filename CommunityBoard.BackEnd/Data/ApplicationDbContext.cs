@@ -1,10 +1,11 @@
 ﻿using CommunityBoard.Core.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CommunityBoard.BackEnd.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<User, Role, int>
+    public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -17,14 +18,9 @@ namespace CommunityBoard.BackEnd.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            // For int Primary Key
-            builder.Entity<User>()
-                .Property(p => p.Id)
-                .UseIdentityColumn();
 
-            builder.Entity<Role>()
-                .Property(p => p.Id)
-                .UseIdentityColumn();
+            builder.Entity<User>()
+                .ToTable("User");
 
             builder.Entity<Announcement>()
                 .Property(p => p.Type)
