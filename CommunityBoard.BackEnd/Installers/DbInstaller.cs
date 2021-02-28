@@ -1,5 +1,6 @@
 ﻿using CommunityBoard.BackEnd.Data;
 using CommunityBoard.Core.Interfaces;
+using CommunityBoard.Core.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,8 +15,13 @@ namespace CommunityBoard.BackEnd.Installers
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("CommunityBoard")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<User>(options => 
+            {
+                options.Password.RequiredLength = 8;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+            })
+            .AddEntityFrameworkStores<ApplicationDbContext>();
         }
     }
 }
