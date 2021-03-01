@@ -1,4 +1,6 @@
 ﻿using CommunityBoard.Core.DomainObjects;
+using CommunityBoard.Core.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace CommunityBoard.Core.Interfaces

@@ -10,9 +10,9 @@
         {
             public const string Create = Base + "/announcements";
             public const string GetAll = Base + "/announcements";
-            public const string Get = Base + "/announcements/{id}";
-            public const string Update = Base + "/announcements/{id}";
-            public const string Delete = Base + "/announcements/{id}";
+            public const string Get = Base + "/announcements/{announcementId}";
+            public const string Update = Base + "/announcements/{announcementId}";
+            public const string Delete = Base + "/announcements/{announcementId}";
         }
 
         //For simplicity purposes, we include the identity as a part of this API

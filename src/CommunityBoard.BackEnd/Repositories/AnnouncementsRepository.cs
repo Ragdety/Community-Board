@@ -1,8 +1,10 @@
 ﻿using CommunityBoard.BackEnd.Data;
+using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.Interfaces;
 using CommunityBoard.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CommunityBoard.BackEnd.Repositories
@@ -24,7 +26,7 @@ namespace CommunityBoard.BackEnd.Repositories
 
         public async Task<bool> DeleteAsync(object id)
         {
-            var announcement = await FindAsync(id);
+            var announcement = await FindById((int)id);
             _db.Remove(announcement);
             var deleted = await _db.SaveChangesAsync();
             return deleted > 0;
@@ -35,9 +37,9 @@ namespace CommunityBoard.BackEnd.Repositories
             return await _db.Announcements.ToListAsync();
         }
 
-        public async Task<Announcement> FindAsync(object id)
+        public async Task<Announcement> FindById(object id)
         {
-            return await _db.Announcements.SingleOrDefaultAsync(a => a.Id == (int)id);
+            return await _db.Announcements.FirstOrDefaultAsync(a => a.Id == (int)id);
         }
 
         public async Task<bool> UpdateAsync(Announcement announcementToUpdate)
@@ -47,9 +49,23 @@ namespace CommunityBoard.BackEnd.Repositories
             return updated > 0;
         }
 
-        public Task<IList<Announcement>> FindAllUserAnnouncements(User user)
+        public async Task<IList<Announcement>> FindAllUserAnnouncements(User user)
         {
             throw new System.NotImplementedException();
+        }
+
+        public async Task<bool> UserOwnsAnnouncementAsync(int announcementId, int userId)
+        {
+            var announcement = 
+                await _db.Announcements.AsNoTracking().SingleOrDefaultAsync(a => a.Id == announcementId);
+
+            if (announcement == null)
+                return false;
+
+            if (announcement.UserId != userId)
+                return false;
+
+            return true;
         }
     }
 }

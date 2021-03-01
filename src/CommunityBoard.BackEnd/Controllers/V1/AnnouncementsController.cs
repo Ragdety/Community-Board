@@ -2,6 +2,7 @@
 using CommunityBoard.BackEnd.Utilities;
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.DTOs.Responses;
+using CommunityBoard.Core.Enums;
 using CommunityBoard.Core.Interfaces;
 using CommunityBoard.Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -26,13 +27,6 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             _identityRepository = identityRepository;
         }
 
-        [AllowAnonymous] //Everyone can view all announcements
-        [HttpGet(ApiRoutes.Announcements.GetAll)]
-        public async Task<IActionResult> GetAll()
-        {
-            return Ok(await _announcementRepository.FindAllAsync());
-        }
-
         [HttpPost(ApiRoutes.Announcements.Create)]
         public async Task<IActionResult> Create([FromBody] CreateAnnouncementDto announcementDto)
         {
@@ -41,7 +35,7 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             {
                 userId = HttpContext.GetUserId();
             }
-            catch(ArgumentNullException)
+            catch (ArgumentNullException)
             {
                 return Unauthorized();
             }
@@ -49,7 +43,7 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             var announcement = new Announcement
             {
                 Name = announcementDto.Name,
-                Type = announcementDto.Type,
+                Type = (AnnouncementType)Enum.Parse(typeof(AnnouncementType), announcementDto.Type),
                 Description = announcementDto.Description,
                 Image = announcementDto.Image,
                 CreatedAt = DateTime.UtcNow,
@@ -60,12 +54,71 @@ namespace CommunityBoard.BackEnd.Controllers.V1
 
             //https://localhost:5001 in this case
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-
-            var locationUri =  baseUrl + ApiRoutes.Announcements.Get.Replace("{id}", announcement.Id.ToString());
+            var locationUri = baseUrl + ApiRoutes.Announcements.Get.Replace("{id}", announcement.Id.ToString());
             var response = new AnnouncementResponse { Id = announcement.Id };
 
             //201 - Created
             return Created(locationUri, response);
+        }
+
+
+        [AllowAnonymous] //Anyone can view all announcements
+        [HttpGet(ApiRoutes.Announcements.GetAll)]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await _announcementRepository.FindAllAsync());
+        }
+
+        [AllowAnonymous]
+        [HttpGet(ApiRoutes.Announcements.Get)]
+        public async Task<IActionResult> Get([FromRoute] int announcementId)
+        {
+            var announcement = await _announcementRepository.FindById(announcementId);
+            if (announcement == null)
+                return NotFound(new { Error = "Announcement was not found." });
+            return Ok(announcement);
+        }
+
+        [HttpPut(ApiRoutes.Announcements.Update)]
+        public async Task<IActionResult> Update(
+            [FromRoute] int announcementId,
+            [FromBody] UpdateAnnouncementDto announcementDto)
+        {
+            var userOwnsAnnouncement 
+                = await _announcementRepository.UserOwnsAnnouncementAsync(
+                    announcementId, HttpContext.GetUserId());
+
+            if (!userOwnsAnnouncement)
+                return BadRequest(new { Error = "You do not own this announcement" });
+
+            var announcement = await _announcementRepository.FindById(announcementId);
+            announcement.Name = announcementDto.Name;
+            announcement.Type = (AnnouncementType)Enum.Parse(typeof(AnnouncementType), announcementDto.Type);
+            announcement.Description = announcementDto.Description;
+            announcement.Image = announcementDto.Image;
+
+            var updated = await _announcementRepository.UpdateAsync(announcement);
+            if (updated)
+                return Ok(announcement);
+
+            return NotFound(new { Error = "Announcement was not found." });
+        }
+
+        [HttpDelete(ApiRoutes.Announcements.Delete)]
+        public async Task<IActionResult> Delete([FromRoute] int announcementId)
+        {
+            var userOwnsAnnouncement
+                = await _announcementRepository.UserOwnsAnnouncementAsync(
+                    announcementId, HttpContext.GetUserId());
+
+            if (!userOwnsAnnouncement)
+                return BadRequest(new { Error = "You do not own this announcement" });
+
+            var deleted = await _announcementRepository.DeleteAsync(announcementId);
+            if (deleted)
+                return NoContent();
+
+            return NotFound(new { Error = "Announcement was not found." });
         }
     }
 }

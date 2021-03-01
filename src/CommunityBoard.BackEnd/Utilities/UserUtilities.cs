@@ -20,16 +20,6 @@ namespace CommunityBoard.BackEnd.Utilities
                 int.Parse(httpContext.User.Claims.Single(u => u.Type == "id").Value);
         }
 
-        //public static User GetUser(this HttpContext httpContext)
-        //{
-        //    if (httpContext.User == null)
-        //    {
-        //        throw new ArgumentNullException("No user id");
-        //    }
-
-        //    return httpContext.User.Claims.
-        //}
-
         public static bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
