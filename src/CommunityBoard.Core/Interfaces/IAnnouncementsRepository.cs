@@ -1,11 +1,11 @@
 ﻿using CommunityBoard.Core.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CommunityBoard.Core.Interfaces
 {
     public interface IAnnouncementsRepository : IGenericRepository<Announcement>
     {
-        public Task<Announcement> FindAllUserAnnouncements(User user);
-        public Task<Announcement> DeleteUserAnnouncement(int announcementId, User user);
+        public Task<IList<Announcement>> FindAllUserAnnouncements(User user);
     }
 }

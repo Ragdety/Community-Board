@@ -1,5 +1,7 @@
-﻿using CommunityBoard.Core.Interfaces;
+﻿using CommunityBoard.BackEnd.Data;
+using CommunityBoard.Core.Interfaces;
 using CommunityBoard.Core.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,37 +9,45 @@ namespace CommunityBoard.BackEnd.Repositories
 {
     public class AnnouncementsRepository : IAnnouncementsRepository
     {
-        public Task<Announcement> CreateAsync(Announcement entity)
+        private readonly ApplicationDbContext _db;
+        public AnnouncementsRepository(ApplicationDbContext db)
         {
-            throw new System.NotImplementedException();
+            _db = db;
         }
 
-        public Task<Announcement> DeleteAsync(object id)
+        public async Task<bool> CreateAsync(Announcement announcement)
         {
-            throw new System.NotImplementedException();
+            await _db.Announcements.AddAsync(announcement);
+            var created = await _db.SaveChangesAsync();
+            return created > 0;
         }
 
-        public Task<Announcement> DeleteUserAnnouncement(int announcementId, User user)
+        public async Task<bool> DeleteAsync(object id)
         {
-            throw new System.NotImplementedException();
+            var announcement = await FindAsync(id);
+            _db.Remove(announcement);
+            var deleted = await _db.SaveChangesAsync();
+            return deleted > 0;
         }
 
-        public Task<IList<Announcement>> FindAllAsync()
+        public async Task<IList<Announcement>> FindAllAsync()
         {
-            throw new System.NotImplementedException();
+            return await _db.Announcements.ToListAsync();
         }
 
-        public Task<Announcement> FindAllUserAnnouncements(User user)
+        public async Task<Announcement> FindAsync(object id)
         {
-            throw new System.NotImplementedException();
+            return await _db.Announcements.SingleOrDefaultAsync(a => a.Id == (int)id);
         }
 
-        public Task<Announcement> FindAsync(object id)
+        public async Task<bool> UpdateAsync(Announcement announcementToUpdate)
         {
-            throw new System.NotImplementedException();
+            _db.Announcements.Update(announcementToUpdate);
+            var updated = await _db.SaveChangesAsync();
+            return updated > 0;
         }
 
-        public Task<bool> UpdateAsync(object id)
+        public Task<IList<Announcement>> FindAllUserAnnouncements(User user)
         {
             throw new System.NotImplementedException();
         }

@@ -2,10 +2,6 @@
 using CommunityBoard.Core.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CommunityBoard.BackEnd.Installers
 {
@@ -14,6 +10,8 @@ namespace CommunityBoard.BackEnd.Installers
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IIdentityRepository, IdentityRepository>();
+            services.AddScoped<IAnnouncementsRepository, AnnouncementsRepository>();
+            services.AddScoped<IReportsRepository, ReportsRepository>();
         }
     }
 }

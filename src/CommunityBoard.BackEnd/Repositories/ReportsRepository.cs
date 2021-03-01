@@ -9,12 +9,12 @@ namespace CommunityBoard.BackEnd.Repositories
 {
     public class ReportsRepository : IReportsRepository
     {
-        public Task<Report> CreateAsync(Report entity)
+        public Task<bool> CreateAsync(Report entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Report> DeleteAsync(object id)
+        public Task<bool> DeleteAsync(object id)
         {
             throw new NotImplementedException();
         }
@@ -29,7 +29,7 @@ namespace CommunityBoard.BackEnd.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateAsync(object id)
+        public Task<bool> UpdateAsync(Report entityToUpdate)
         {
             throw new NotImplementedException();
         }

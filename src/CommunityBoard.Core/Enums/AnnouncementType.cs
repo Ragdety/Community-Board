@@ -10,6 +10,7 @@ namespace CommunityBoard.Core.Enums
         Club,
         SchoolEvent,
         TutoringOffer,
-        JobOffer
+        JobOffer,
+        Other
     }
 }

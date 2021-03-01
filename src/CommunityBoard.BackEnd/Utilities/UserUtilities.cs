@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CommunityBoard.Core.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -18,6 +19,16 @@ namespace CommunityBoard.BackEnd.Utilities
             return 
                 int.Parse(httpContext.User.Claims.Single(u => u.Type == "id").Value);
         }
+
+        //public static User GetUser(this HttpContext httpContext)
+        //{
+        //    if (httpContext.User == null)
+        //    {
+        //        throw new ArgumentNullException("No user id");
+        //    }
+
+        //    return httpContext.User.Claims.
+        //}
 
         public static bool IsValidEmail(string email)
         {
