@@ -1,0 +1,8 @@
+﻿namespace CommunityBoard.Core.DTOs
+{
+    public class UserLoginDto
+    {
+        public string EmailOrUserName { get; set; }
+        public string Password { get; set; }
+    }
+}

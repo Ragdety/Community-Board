@@ -38,5 +38,25 @@ namespace CommunityBoard.BackEnd.Controllers.V1
                 Token = authResponse.Token
             });
         }
+
+        [HttpPost(ApiRoutes.Identity.Login)]
+        public async Task<IActionResult> Login([FromBody] UserLoginDto user)
+        {
+            var authResponse = await _identityRepository.LoginAsync(
+                user.EmailOrUserName, user.Password);
+
+            if (!authResponse.Success)
+            {
+                return BadRequest(new AuthFailedResponse
+                {
+                    Errors = authResponse.Errors
+                });
+            }
+
+            return Ok(new AuthSuccessResponse
+            {
+                Token = authResponse.Token
+            });
+        }
     }
 }

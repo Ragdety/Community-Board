@@ -7,6 +7,6 @@ namespace CommunityBoard.Core.Interfaces
     {
         Task<AuthenticationResult> RegisterAsync(
             string firstName, string lastName, string userName, string email, string password);
-
+        Task<AuthenticationResult> LoginAsync(string emailOrUserName, string password);
     }
 }

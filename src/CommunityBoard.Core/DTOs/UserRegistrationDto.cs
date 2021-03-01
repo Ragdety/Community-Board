@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace CommunityBoard.Core.DTOs
 {
@@ -7,6 +8,8 @@ namespace CommunityBoard.Core.DTOs
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string UserName { get; set; }
+        
+        [EmailAddress]
         public string Email { get; set; }
         public string Password { get; set; }
         public DateTime DateRegistered { get; set; }
