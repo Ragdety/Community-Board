@@ -1,16 +1,15 @@
 ﻿using CommunityBoard.BackEnd.Options;
+using CommunityBoard.BackEnd.Utilities;
 using CommunityBoard.Core.DomainObjects;
 using CommunityBoard.Core.Interfaces;
 using CommunityBoard.Core.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CommunityBoard.BackEnd.Repositories
@@ -31,7 +30,7 @@ namespace CommunityBoard.BackEnd.Repositories
         public async Task<AuthenticationResult> LoginAsync(string emailOrUserName, string password)
         {
             User user;
-            if (IsValidEmail(emailOrUserName))
+            if (UserUtilities.IsValidEmail(emailOrUserName))
                 user = await _userManager.FindByEmailAsync(emailOrUserName);
             else
                 user = await _userManager.FindByNameAsync(emailOrUserName);
@@ -127,50 +126,6 @@ namespace CommunityBoard.BackEnd.Repositories
                 Success = true,
                 Token = tokenHandler.WriteToken(token)
             };
-        }
-
-        private static bool IsValidEmail(string email)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-                return false;
-
-            try
-            {
-                // Normalize the domain
-                email = Regex.Replace(email, @"(@)(.+)$", DomainMapper,
-                                      RegexOptions.None, TimeSpan.FromMilliseconds(200));
-
-                // Examines the domain part of the email and normalizes it.
-                string DomainMapper(Match match)
-                {
-                    // Use IdnMapping class to convert Unicode domain names.
-                    var idn = new IdnMapping();
-
-                    // Pull out and process domain name (throws ArgumentException on invalid)
-                    string domainName = idn.GetAscii(match.Groups[2].Value);
-
-                    return match.Groups[1].Value + domainName;
-                }
-            }
-            catch (RegexMatchTimeoutException)
-            {
-                return false;
-            }
-            catch (ArgumentException)
-            {
-                return false;
-            }
-
-            try
-            {
-                return Regex.IsMatch(email,
-                    @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
-                    RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
-            }
-            catch (RegexMatchTimeoutException)
-            {
-                return false;
-            }
         }
     }
 }
