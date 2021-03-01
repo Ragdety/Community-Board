@@ -8,7 +8,19 @@
 
         public static class Announcements
         {
+            public const string Create = Base + "/announcements";
             public const string GetAll = Base + "/announcements";
+            public const string Get = Base + "/announcements/{id}";
+            public const string Update = Base + "/announcements/{id}";
+            public const string Delete = Base + "/announcements/{id}";
+        }
+
+        //For simplicity purposes, we include the identity as a part of this API
+        //This could be in a different server
+        public static class Identity
+        {
+            public const string Login = Base + "/identity/login";
+            public const string Register = Base + "/identity/register";
         }
     }
 }
