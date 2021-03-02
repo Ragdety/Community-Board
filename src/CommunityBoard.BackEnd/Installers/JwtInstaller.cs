@@ -1,5 +1,5 @@
 ﻿using CommunityBoard.BackEnd.Options;
-using CommunityBoard.Core.Interfaces;
+using CommunityBoard.Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,7 +1,7 @@
 ﻿using CommunityBoard.BackEnd.Contracts.V1;
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.DTOs.Responses;
-using CommunityBoard.Core.Interfaces;
+using CommunityBoard.Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

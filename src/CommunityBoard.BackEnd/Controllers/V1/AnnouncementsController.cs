@@ -3,7 +3,7 @@ using CommunityBoard.BackEnd.Utilities;
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.DTOs.Responses;
 using CommunityBoard.Core.Enums;
-using CommunityBoard.Core.Interfaces;
+using CommunityBoard.Core.Interfaces.Repositories;
 using CommunityBoard.Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

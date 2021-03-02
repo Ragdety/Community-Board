@@ -1,4 +1,4 @@
-﻿using CommunityBoard.Core.Interfaces;
+﻿using CommunityBoard.Core.Interfaces.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;

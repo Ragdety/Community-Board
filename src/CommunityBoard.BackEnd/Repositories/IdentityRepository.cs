@@ -1,7 +1,7 @@
 ﻿using CommunityBoard.BackEnd.Options;
 using CommunityBoard.BackEnd.Utilities;
 using CommunityBoard.Core.DomainObjects;
-using CommunityBoard.Core.Interfaces;
+using CommunityBoard.Core.Interfaces.Repositories;
 using CommunityBoard.Core.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;

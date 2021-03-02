@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CommunityBoard.Core.Interfaces
+namespace CommunityBoard.Core.Interfaces.Repositories
 {
     public interface IInstaller
     {

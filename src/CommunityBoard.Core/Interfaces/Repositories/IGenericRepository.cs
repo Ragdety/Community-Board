@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CommunityBoard.Core.Interfaces
+namespace CommunityBoard.Core.Interfaces.Repositories
 {
     public interface IGenericRepository<TEntity>
     {

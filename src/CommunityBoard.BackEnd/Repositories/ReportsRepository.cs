@@ -1,4 +1,4 @@
-﻿using CommunityBoard.Core.Interfaces;
+﻿using CommunityBoard.Core.Interfaces.Repositories;
 using CommunityBoard.Core.Models;
 using System;
 using System.Collections.Generic;

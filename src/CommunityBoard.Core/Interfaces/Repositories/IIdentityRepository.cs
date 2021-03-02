@@ -1,9 +1,7 @@
 ﻿using CommunityBoard.Core.DomainObjects;
-using CommunityBoard.Core.Models;
-using System;
 using System.Threading.Tasks;
 
-namespace CommunityBoard.Core.Interfaces
+namespace CommunityBoard.Core.Interfaces.Repositories
 {
     public interface IIdentityRepository
     {
