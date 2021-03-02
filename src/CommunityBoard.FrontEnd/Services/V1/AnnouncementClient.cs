@@ -17,6 +17,18 @@ namespace CommunityBoard.FrontEnd.Services.V1
         {
             _httpClient = httpClient;
         }
+        public async Task<List<Announcement>> GetAnnouncementsAsync()
+        {
+            var response = await _httpClient.GetAsync(ApiRoutes.Announcements.GetAll);
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsAsync<List<Announcement>>();
+        }
+
+        public async Task<Announcement> GetUserAnnouncementAsync(int userId)
+        {
+            throw new System.NotImplementedException();
+        }
 
         public async Task<bool> CreateAnnouncementAsync(CreateAnnouncementDto announcement)
         {
@@ -29,19 +41,6 @@ namespace CommunityBoard.FrontEnd.Services.V1
         }
 
         public async Task<Announcement> GetAnnouncementByIdAsync(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public async Task<List<Announcement>> GetAnnouncementsAsync()
-        {
-            var response = await _httpClient.GetAsync(ApiRoutes.Announcements.GetAll);
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsAsync<List<Announcement>>();
-        }
-
-        public async Task<Announcement> GetUserAnnouncementAsync(int userId)
         {
             throw new System.NotImplementedException();
         }

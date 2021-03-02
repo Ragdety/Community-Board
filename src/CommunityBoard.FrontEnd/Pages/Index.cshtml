@@ -17,16 +17,22 @@
             {
             <div class="col-lg-4 mb-4">
                 <div class="card">
-                    <img src="@announcement.URL" alt="img" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">@announcement.Name</h5>
-                        <p class="card-text">@announcement.Description</p>
-                        <a asp-page="/Contact" class="btn btn-outline-success btn-sm transition">
-                            Contact</a>
-                        <a asp-page="/Report" class="btn btn-outline-danger btn-sm float-right transition">
-                            <i class="fas fa-flag"></i>
-                        </a>
-                    </div>
+                    @if (announcement.Image != null)
+                    {
+                        <!--Convert image to view correctly-->
+                        <img src="@announcement.Image" alt="img" class="card-img-top">
+                    }
+                <div class="card-body">
+                    <h5 class="card-title">@announcement.Name</h5>
+                    <p class="card-text">@announcement.Type</p>
+                    <p class="card-text">@announcement.Description</p>
+                    <a asp-page="/Contact" class="btn btn-outline-success btn-sm transition">
+                        Contact
+                    </a>
+                    <a asp-page="/Report" class="btn btn-outline-danger btn-sm float-right transition">
+                        <i class="fas fa-flag"></i>
+                    </a>
+                </div>
                 </div>
             </div>
             }
