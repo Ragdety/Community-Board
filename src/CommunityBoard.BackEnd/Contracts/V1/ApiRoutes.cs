@@ -8,11 +8,15 @@
 
         public static class Announcements
         {
+            //Main Routes (CRUD)
             public const string Create = Base + "/announcements";
             public const string GetAll = Base + "/announcements";
             public const string Get = Base + "/announcements/{announcementId}";
             public const string Update = Base + "/announcements/{announcementId}";
             public const string Delete = Base + "/announcements/{announcementId}";
+
+            //Extra
+            public const string GetFromUser = Base + "/announcements/user/";
         }
 
         //For simplicity purposes, we include the identity as a part of this API

@@ -17,14 +17,10 @@ namespace CommunityBoard.BackEnd.Controllers.V1
     public class AnnouncementsController : Controller
     {
         private readonly IAnnouncementsRepository _announcementRepository;
-        private readonly IIdentityRepository _identityRepository;
 
-        public AnnouncementsController(
-            IAnnouncementsRepository announcementRepository, 
-            IIdentityRepository identityRepository)
+        public AnnouncementsController(IAnnouncementsRepository announcementRepository)
         {
             _announcementRepository = announcementRepository;
-            _identityRepository = identityRepository;
         }
 
         [HttpPost(ApiRoutes.Announcements.Create)]
@@ -119,6 +115,27 @@ namespace CommunityBoard.BackEnd.Controllers.V1
                 return NoContent();
 
             return NotFound(new { Error = "Announcement was not found." });
+        }
+
+        //Extra
+        [HttpGet(ApiRoutes.Announcements.GetFromUser)]
+        public async Task<IActionResult> GetAnnouncementsFromUser()
+        {
+            int userId;
+            try
+            {
+                userId = HttpContext.GetUserId();
+            }
+            catch(ArgumentNullException)
+            {
+                return Unauthorized(new { ErrorMessage = "You're not allowed" });
+            }
+
+            var announcements = await _announcementRepository.FindAllUserAnnouncements(userId);
+            if (announcements == null)
+                return NotFound();
+
+            return Ok(announcements);
         }
     }
 }

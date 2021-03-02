@@ -1,5 +1,4 @@
 ﻿using CommunityBoard.BackEnd.Data;
-using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.Interfaces;
 using CommunityBoard.Core.Models;
 using Microsoft.EntityFrameworkCore;
@@ -49,9 +48,11 @@ namespace CommunityBoard.BackEnd.Repositories
             return updated > 0;
         }
 
-        public async Task<IList<Announcement>> FindAllUserAnnouncements(User user)
+        public async Task<IList<Announcement>> FindAllUserAnnouncements(int userId)
         {
-            throw new System.NotImplementedException();
+            return await _db.Announcements
+                .Where(a => a.UserId == userId)
+                .ToListAsync();
         }
 
         public async Task<bool> UserOwnsAnnouncementAsync(int announcementId, int userId)

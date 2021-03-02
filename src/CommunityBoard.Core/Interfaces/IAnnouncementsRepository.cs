@@ -6,7 +6,7 @@ namespace CommunityBoard.Core.Interfaces
 {
     public interface IAnnouncementsRepository : IGenericRepository<Announcement>
     {
-        public Task<IList<Announcement>> FindAllUserAnnouncements(User user);
+        public Task<IList<Announcement>> FindAllUserAnnouncements(int userId);
         Task<bool> UserOwnsAnnouncementAsync(int announcementId, int userId);
     }
 }
