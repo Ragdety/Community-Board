@@ -1,6 +1,6 @@
-﻿namespace CommunityBoard.Core.DTOs.Responses
+﻿namespace CommunityBoard.Core.DTOs
 {
-    public class AuthSuccessResponse
+    public class RefreshTokenDto
     {
         public string Token { get; set; }
         public string RefreshToken { get; set; }
