@@ -1,17 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using CommunityBoard.Core.Interfaces.Clients;
+using CommunityBoard.Core.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CommunityBoard.FrontEnd.Pages.PostManagement
 {
     public class ManageModel : PageModel
     {
-        public void OnGet()
-        {
+        private readonly IAnnouncementClient _apiAnnouncementClient;
 
+        public ManageModel(IAnnouncementClient apiAnnouncementClient)
+        {
+            _apiAnnouncementClient = apiAnnouncementClient;
+        }
+
+        public IEnumerable<Announcement> Announcements;
+
+        public async Task OnGet()
+        {
+            Announcements = await _apiAnnouncementClient.GetAnnouncementsAsync();
         }
     }
 }
