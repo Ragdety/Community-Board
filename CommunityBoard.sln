@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityBoard.Core", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityBoard.FrontEnd", "src\CommunityBoard.FrontEnd\CommunityBoard.FrontEnd.csproj", "{73DC7B09-99C9-4B9B-8C43-1EEB122FDE48}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityBoard.Test", "test\CommunityBoard.Test\CommunityBoard.Test.csproj", "{6D94B3A8-F004-42D2-9913-5F3AE52E6D44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityBoard.IntegrationTests", "test\CommunityBoard.Test\CommunityBoard.IntegrationTests.csproj", "{6D94B3A8-F004-42D2-9913-5F3AE52E6D44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

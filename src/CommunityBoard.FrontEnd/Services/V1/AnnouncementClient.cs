@@ -2,7 +2,7 @@
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.Interfaces.Clients;
 using CommunityBoard.Core.Models;
-using CommunityBoard.FrontEnd.Extensions;
+//using CommunityBoard.FrontEnd.Extensions;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
