@@ -33,6 +33,16 @@ namespace CommunityBoard.FrontEnd.Pages.Authentication
                 Password = Password.Trim()
             });
 
+            if(!response.Success)
+            {
+                foreach (var error in response.Errors)
+                {
+                    //Add errors to Model State to display them using Validation Summary
+                    ModelState.AddModelError("LoginErrors", error);
+                }
+                return Page();
+            }
+
             var handler = new JwtSecurityTokenHandler();
             var token = handler.ReadJwtToken(response.Token);
 
@@ -42,7 +52,6 @@ namespace CommunityBoard.FrontEnd.Pages.Authentication
 
             //Sign the user in
             await HttpContext.SignInAsync(userPrincipal);
-
             return RedirectToPage("/Index");
         }
     }

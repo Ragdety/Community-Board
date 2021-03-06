@@ -9,7 +9,13 @@ namespace CommunityBoard.FrontEnd.Installers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizePage("/PostManagement/Create");
+                options.Conventions.AuthorizePage("/PostManagement/Update");
+                options.Conventions.AuthorizePage("/PostManagement/Manage");
+            }).AddRazorRuntimeCompilation();
+
             services.AddDistributedMemoryCache();
             services.AddSession();
 
@@ -18,8 +24,8 @@ namespace CommunityBoard.FrontEnd.Installers
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, cookieAuthOptions =>
                 {
                     cookieAuthOptions.Cookie.Name = "MyApplicationCookie";
-                    cookieAuthOptions.LoginPath = "/signIn";
-                    cookieAuthOptions.LogoutPath = "/signOut";
+                    cookieAuthOptions.LoginPath = "/Authentication/Register";
+                    cookieAuthOptions.LogoutPath = "/Authentication/Logout";
                     cookieAuthOptions.AccessDeniedPath = "/accessDenied";
                 });
         }

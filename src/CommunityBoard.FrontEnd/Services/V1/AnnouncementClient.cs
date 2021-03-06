@@ -2,6 +2,7 @@
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.Interfaces.Clients;
 using CommunityBoard.Core.Models;
+using System;
 //using CommunityBoard.FrontEnd.Extensions;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -19,10 +20,16 @@ namespace CommunityBoard.FrontEnd.Services.V1
         }
         public async Task<List<Announcement>> GetAnnouncementsAsync()
         {
-            var response = await _httpClient.GetAsync(ApiRoutes.Announcements.GetAll);
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsAsync<List<Announcement>>();
+            try
+            {
+                var response = await _httpClient.GetAsync(ApiRoutes.Announcements.GetAll);
+                response.EnsureSuccessStatusCode();
+                return await response.Content.ReadAsAsync<List<Announcement>>();
+            }
+            catch(Exception)
+            {
+                return null;
+            }
         }
 
         public async Task<Announcement> GetUserAnnouncementAsync(int userId)
