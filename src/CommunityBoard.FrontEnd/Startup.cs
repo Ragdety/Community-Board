@@ -1,6 +1,7 @@
 using CommunityBoard.FrontEnd.Installers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -41,6 +42,21 @@ namespace CommunityBoard.FrontEnd
 
             app.UseRouting();
 
+            //Used Sessions before:
+            //app.UseSession();
+            //app.Use(async (context, next) =>
+            //{
+            //    //This gets the token from the stores session
+            //    var JWToken = context.Session.GetString("JWToken");
+            //    if (!string.IsNullOrEmpty(JWToken))
+            //    {
+            //        //This adds the token to all Http Requests
+            //        context.Request.Headers.Add("Authorization", "Bearer " + JWToken);
+            //    }
+            //    await next();
+            //});
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

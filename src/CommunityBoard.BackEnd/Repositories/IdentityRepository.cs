@@ -230,7 +230,10 @@ namespace CommunityBoard.BackEnd.Repositories
                     new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                    new Claim("id", user.Id.ToString())
+                    new Claim("id", user.Id.ToString()),
+                    new Claim("username", user.UserName.ToString()),
+                    new Claim("firstName", user.FirstName.ToString()),
+                    new Claim("lastName", user.LastName.ToString()),
                 }),
                 Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),
                 SigningCredentials = new SigningCredentials(

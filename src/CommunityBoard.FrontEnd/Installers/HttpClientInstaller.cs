@@ -15,6 +15,11 @@ namespace CommunityBoard.FrontEnd.Installers
             {
                 client.BaseAddress = new Uri(configuration["serviceUrl"]);
             });
+
+            services.AddHttpClient<IIdentityClient, IdentityClient>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["serviceUrl"]);
+            });
         }
     }
 }
