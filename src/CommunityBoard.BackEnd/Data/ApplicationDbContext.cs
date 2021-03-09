@@ -1,4 +1,5 @@
 ﻿using CommunityBoard.Core.DomainObjects;
+using CommunityBoard.Core.Interfaces;
 using CommunityBoard.Core.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -8,6 +9,7 @@ namespace CommunityBoard.BackEnd.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

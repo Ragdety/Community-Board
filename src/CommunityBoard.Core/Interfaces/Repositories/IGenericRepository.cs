@@ -7,7 +7,7 @@ namespace CommunityBoard.Core.Interfaces.Repositories
     {
         public Task<bool> CreateAsync(TEntity entity);
         public Task<IList<TEntity>> FindAllAsync();
-        public Task<TEntity> FindById(object id);
+        public Task<TEntity> FindByIdAsync(object id);
         public Task<bool> UpdateAsync(TEntity entityToUpdate);
         public Task<bool> DeleteAsync(object id);
     }

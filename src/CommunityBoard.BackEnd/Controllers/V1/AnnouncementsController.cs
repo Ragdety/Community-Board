@@ -69,7 +69,7 @@ namespace CommunityBoard.BackEnd.Controllers.V1
         [HttpGet(ApiRoutes.Announcements.Get)]
         public async Task<IActionResult> Get([FromRoute] int announcementId)
         {
-            var announcement = await _announcementRepository.FindById(announcementId);
+            var announcement = await _announcementRepository.FindByIdAsync(announcementId);
             if (announcement == null)
                 return NotFound(new { Error = "Announcement was not found." });
             return Ok(announcement);
@@ -87,7 +87,7 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             if (!userOwnsAnnouncement)
                 return BadRequest(new { Error = "You do not own this announcement" });
 
-            var announcement = await _announcementRepository.FindById(announcementId);
+            var announcement = await _announcementRepository.FindByIdAsync(announcementId);
             announcement.Name = announcementDto.Name;
             announcement.Type = (AnnouncementType)Enum.Parse(typeof(AnnouncementType), announcementDto.Type);
             announcement.Description = announcementDto.Description;

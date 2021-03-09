@@ -25,7 +25,7 @@ namespace CommunityBoard.BackEnd.Repositories
 
         public async Task<bool> DeleteAsync(object id)
         {
-            var announcement = await FindById((int)id);
+            var announcement = await FindByIdAsync((int)id);
             _db.Remove(announcement);
             var deleted = await _db.SaveChangesAsync();
             return deleted > 0;
@@ -36,7 +36,7 @@ namespace CommunityBoard.BackEnd.Repositories
             return await _db.Announcements.ToListAsync();
         }
 
-        public async Task<Announcement> FindById(object id)
+        public async Task<Announcement> FindByIdAsync(object id)
         {
             return await _db.Announcements.FirstOrDefaultAsync(a => a.Id == (int)id);
         }

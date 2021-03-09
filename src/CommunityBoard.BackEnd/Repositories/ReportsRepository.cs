@@ -24,7 +24,7 @@ namespace CommunityBoard.BackEnd.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Report> FindById(object id)
+        public Task<Report> FindByIdAsync(object id)
         {
             throw new NotImplementedException();
         }
