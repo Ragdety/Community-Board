@@ -18,7 +18,22 @@ namespace CommunityBoard.UnitTests.RepoTests
         public async Task FindALL_ReturnsNull_WhenDoesNotExist()
         {
             var announcements = await _fixture._repo.FindAllAsync();
-            announcements.Should().BeEmpty();
+            announcements.Should().BeNullOrEmpty();
+            announcements.Count.Should().BeLessOrEqualTo(0);
         }
+
+        //[Fact]
+        //public async Task FindALL_ReturnsList_WhenDoesExist()
+        //{
+        //    //Arrange
+        //    //_fixture.Seed();
+
+        //    //Act
+        //    var announcements = await _fixture._repo.FindAllAsync();
+            
+        //    //Assert
+        //    announcements.Should().NotBeNullOrEmpty();
+        //    announcements.Count.Should().BeGreaterOrEqualTo(1);
+        //}
     }
 }
