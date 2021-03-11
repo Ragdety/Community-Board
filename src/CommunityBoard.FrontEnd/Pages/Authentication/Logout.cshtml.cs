@@ -1,22 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace CommunityBoard.FrontEnd.Pages.Authentication
 {
     public class LogoutModel : PageModel
     {
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            DeleteCookies();
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToPage("/Index");
-        }
-
-        private void DeleteCookies()
-        {
-            foreach (var cookie in HttpContext.Request.Cookies)
-            {
-                Response.Cookies.Delete(cookie.Key);
-            }
         }
     }
 }

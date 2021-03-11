@@ -17,54 +17,61 @@
 <br />
 
 <section class="container">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
-            </tr>
-        </thead>
-        <tbody class="js-pscroll">
-            @foreach (var announcement in Model.Announcements)
-            {
+    @if (Model.UserAnnouncements.Item1 == null)
+    {
+        <p>@Model.UserAnnouncements.Item2</p>
+        <a asp-page="/PostManagement/Create"
+           class="btn btn-outline-success btn-sm transition">
+            Create
+        </a>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>@announcement.Name</td>
-                    @if (announcement.Description.Length > 100)
-                    {
-                        <td>
-                            @announcement.Description.Substring(0, 100) ...
-                        </td>
-                    }
-                    else
-                    {
-                        <td>@announcement.Description</td>
-                    }
-                    <td>
-                        <a class="btn btn-outline-warning btn-sm 
-                                  transition text-center"
-                           asp-page="/PostManagement/Update">
-                           <i class="fa fa-pencil"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a class="btn btn-outline-danger 
-                                  btn-sm transition text-center">
-                            <i class="fa fa-trash"></i>
-                        </a>
-                    </td>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
                 </tr>
+            </thead>
+            <tbody class="js-pscroll">
+                @foreach (var announcement in Model.UserAnnouncements.Item1)
+                {
+                    <tr>
+                        <td>@announcement.Name</td>
+                        @if (announcement.Description.Length > 100)
+                        {
+                            <td>
+                                @announcement.Description.Substring(0, 100) ...
+                            </td>
+                        }
+                        else
+                        {
+                            <td>@announcement.Description</td>
+                        }
+                        <td>
+                            <a class="btn btn-outline-warning btn-sm
+                                  transition text-center"
+                               asp-page="/PostManagement/Update">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-danger
+                                  btn-sm transition text-center">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
             }
-        </tbody>
-    </table>
+        </table>
+    }
 </section>
 
-<script src="~/lib/Table_Fixed_Header/vendor/jquery/jquery-3.2.1.min.js"></script>
-<script src="~/lib/Table_Fixed_Header/vendor/bootstrap/js/popper.js"></script>
-<script src="~/lib/Table_Fixed_Header/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="~/lib/Table_Fixed_Header/vendor/select2/select2.min.js"></script>
-<script src="~/lib/Table_Fixed_Header/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script>
     $('.js-pscroll').each(function () {
         var ps = new PerfectScrollbar(this);
@@ -74,4 +81,3 @@
         })
     });
 </script>
-<script src="~/lib/Table_Fixed_Header/js/main.js"></script>

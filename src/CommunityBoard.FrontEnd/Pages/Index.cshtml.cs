@@ -22,7 +22,11 @@ namespace CommunityBoard.FrontEnd.Pages
 
         public async Task OnGet()
         {
-            Announcements = await _apiAnnouncementClient.GetAnnouncementsAsync();
+            try
+            {
+                Announcements = await _apiAnnouncementClient.GetAnnouncementsAsync();
+            }
+            catch { }
         }
     }
 }
