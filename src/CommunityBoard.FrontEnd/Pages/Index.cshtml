@@ -21,8 +21,7 @@
                     <div class="card">
                         @if (announcement.Image != null)
                         {
-                            <!--Convert image to view correctly-->
-                            <img src="@announcement.Image" alt="img" class="card-img-top">
+                            <img src="@Model.RetrieveImage(announcement.Image)" alt="image" class="card-img-top">
                         }
                         <div class="card-body">
                             <h5 class="card-title">@announcement.Name</h5>

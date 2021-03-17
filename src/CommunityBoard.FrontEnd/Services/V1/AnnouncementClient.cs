@@ -3,6 +3,7 @@ using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.Interfaces.Clients;
 using CommunityBoard.Core.Models;
 using CommunityBoard.FrontEnd.Extensions;
+using Microsoft.AspNetCore.Http;
 using System;
 //using CommunityBoard.FrontEnd.Extensions;
 using System.Collections.Generic;
@@ -25,17 +26,17 @@ namespace CommunityBoard.FrontEnd.Services.V1
         {
             var response = await _httpClient.GetAsync(ApiRoutes.Announcements.GetAll);
 
-            if(response.StatusCode == HttpStatusCode.NotFound)
+            if (response.StatusCode == HttpStatusCode.NotFound ||
+                !response.IsSuccessStatusCode)
                 return null;
-            
-            response.EnsureSuccessStatusCode();
+
             return await response.Content.ReadAsAsync<List<Announcement>>();
         }
 
         public async Task<Tuple<List<Announcement>, string>> 
             GetUserAnnouncementsAsync(int userId, string token)
         {
-            //For now, add it to header
+            //For now, add it to header to be able to see current logged in announcements
             _httpClient.AddTokenToHeader(token);
             var response = await _httpClient.GetAsync(ApiRoutes.Announcements.GetFromUser);
 
@@ -49,19 +50,32 @@ namespace CommunityBoard.FrontEnd.Services.V1
                 return new Tuple<List<Announcement>, string>(
                     null, "You do not have access to this user's announcements!");
             }
-
-            response.EnsureSuccessStatusCode();
+            else if(!response.IsSuccessStatusCode)
+            {
+                return new Tuple<List<Announcement>, string>(
+                    null, "Something went wrong when retrieving announcements");
+            }
 
             return new Tuple<List<Announcement>, string>(
                 await response.Content.ReadAsAsync<List<Announcement>>(),"");
         }
 
-        public async Task<bool> CreateAnnouncementAsync(CreateAnnouncementDto announcement)
+        public async Task<bool> CreateAnnouncementAsync(CreateAnnouncementDto announcement, string token)
         {
-            throw new System.NotImplementedException();
+            _httpClient.AddTokenToHeader(token);
+            var response = await _httpClient.PostAsJsonAsync(ApiRoutes.Announcements.Create, 
+                new CreateAnnouncementDto
+                {
+                    Name = announcement.Name,
+                    Type = announcement.Type,
+                    Description = announcement.Description,
+                    Image = announcement.Image
+                });
+
+            return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> DeleteAnnouncementAsync(int id)
+        public async Task<bool> DeleteAnnouncementAsync(int id, string token)
         {
             throw new System.NotImplementedException();
         }
@@ -71,15 +85,9 @@ namespace CommunityBoard.FrontEnd.Services.V1
             throw new System.NotImplementedException();
         }
 
-        public async Task<bool> UpdateAnnouncementAsync(UpdateAnnouncementDto announcement)
+        public async Task<bool> UpdateAnnouncementAsync(UpdateAnnouncementDto announcement, string token)
         {
             throw new System.NotImplementedException();
-        }
-
-        public void AddTokenToHeader(string token)
-        {
-            _httpClient.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer ", token);
         }
     }
 }

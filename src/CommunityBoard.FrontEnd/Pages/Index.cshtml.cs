@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CommunityBoard.Core.Interfaces.Clients;
 using CommunityBoard.Core.Models;
@@ -24,9 +25,19 @@ namespace CommunityBoard.FrontEnd.Pages
         {
             try
             {
+				//Use Url.Page("PagePath", objectValues of url here)
                 Announcements = await _apiAnnouncementClient.GetAnnouncementsAsync();
             }
             catch { }
+        }
+
+        public string RetrieveImage(byte[] image)
+        {
+            string imageBase64Data = Convert.ToBase64String(image);
+            string imageDataURL =
+                string.Format("data:image/png;base64,{0}", imageBase64Data);
+
+            return imageDataURL;
         }
     }
 }

@@ -11,8 +11,8 @@ namespace CommunityBoard.Core.Interfaces.Clients
         Task<List<Announcement>> GetAnnouncementsAsync();
         Task<Announcement> GetAnnouncementByIdAsync(int id);
         Task<Tuple<List<Announcement>, string>> GetUserAnnouncementsAsync(int userId, string token);
-        Task<bool> CreateAnnouncementAsync(CreateAnnouncementDto announcement);
-        Task<bool> UpdateAnnouncementAsync(UpdateAnnouncementDto announcement);
-        Task<bool> DeleteAnnouncementAsync(int id);
+        Task<bool> CreateAnnouncementAsync(CreateAnnouncementDto announcement, string token);
+        Task<bool> UpdateAnnouncementAsync(UpdateAnnouncementDto announcement, string token);
+        Task<bool> DeleteAnnouncementAsync(int id, string token);
     }
 }

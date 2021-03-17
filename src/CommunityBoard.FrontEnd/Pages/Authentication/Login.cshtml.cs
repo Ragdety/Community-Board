@@ -50,10 +50,9 @@ namespace CommunityBoard.FrontEnd.Pages.Authentication
                 new ClaimsIdentity(token.Claims, "myClaims")
             );
 
-            Response.Cookies.Append("JWToken", response.Token);
-
             //Sign the user in
             await HttpContext.SignInAsync(userPrincipal);
+            Response.Cookies.Append("JWToken", response.Token);
             return RedirectToPage("/Index");
         }
     }
