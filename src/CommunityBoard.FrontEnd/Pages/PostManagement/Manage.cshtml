@@ -1,83 +1,92 @@
 ﻿@page
 @model CommunityBoard.FrontEnd.Pages.PostManagement.ManageModel
 @{
-    ViewData["Title"] = "Manage";
+	ViewData["Title"] = "Manage";
 }
 
 <link rel="stylesheet"
-      type="text/css" href="~/lib/Table_Fixed_Header/css/main.css">
+	  type="text/css" href="~/lib/Table_Fixed_Header/css/main.css">
 <link rel="stylesheet"
-      type="text/css" href="~/lib/Table_Fixed_Header/css/util.css">
+	  type="text/css" href="~/lib/Table_Fixed_Header/css/util.css">
 <link rel="stylesheet"
-      type="text/css" href="~/lib/Table_Fixed_Header/vendor/bootstrap/css/bootstrap.min.css">
+	  type="text/css" href="~/lib/Table_Fixed_Header/vendor/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="~/css/custom.css" />
 <link rel="stylesheet" href="~/css/custom-table.css" />
 
-<h2>Manage Announcements for Specific User</h2>
+<h2>Manage Announcements</h2>
 <br />
 
 <section class="container">
-    @if (Model.UserAnnouncements.Item1 == null)
-    {
-        <p>@Model.UserAnnouncements.Item2</p>
-        <a asp-page="/PostManagement/Create"
-           class="btn btn-outline-success btn-sm transition">
-            Create Announcement
-        </a>
-    }
-    else
-    {
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Delete</th>
-                </tr>
-            </thead>
-            <tbody class="js-pscroll">
-                @foreach (var announcement in Model.UserAnnouncements.Item1)
-                {
-                    <tr>
-                        <td>@announcement.Name</td>
-                        @if (announcement.Description.Length > 100)
-                        {
-                            <td>
-                                @announcement.Description.Substring(0, 100) ...
-                            </td>
-                        }
-                        else
-                        {
-                            <td>@announcement.Description</td>
-                        }
-                        <td>
-                            <a class="btn btn-outline-warning btn-sm
+	@if (Model.UserAnnouncements.Item1 == null)
+	{
+		<p>@Model.UserAnnouncements.Item2</p>
+		<a asp-page="/PostManagement/Create"
+		   class="btn btn-outline-success btn-sm transition">
+			Create Announcement
+		</a>
+	}
+	else
+	{
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Name</th>
+					<th scope="col">Description</th>
+					<th scope="col">Edit</th>
+					<th scope="col">Delete</th>
+				</tr>
+			</thead>
+			<tbody class="js-pscroll">
+				@foreach (var announcement in Model.UserAnnouncements.Item1)
+				{
+					<tr>
+						<td>@announcement.Name</td>
+						@if (announcement.Description.Length > 100)
+						{
+							<td>
+								@announcement.Description.Substring(0, 100) ...
+							</td>
+						}
+						else
+						{
+							<td>@announcement.Description</td>
+						}
+						<td>
+							<a class="btn btn-outline-warning btn-sm
                                   transition text-center"
-                               asp-page="/PostManagement/Update">
-                                <i class="fa fa-pencil"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a class="btn btn-outline-danger
-                                  btn-sm transition text-center">
-                                <i class="fa fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-            }
-        </table>
-    }
+							   id="editAnnouncement"
+							   asp-page="/PostManagement/Update">
+								<i class="fa fa-pencil"></i>
+							</a>
+						</td>
+						<td>
+							<form method="post" id="deleteAnnouncementForm"
+								  asp-route-announcementId="@announcement.Id">
+								<button class="btn btn-outline-danger btn-sm transition text-center"
+										@*type="submit"
+										onclick="return confirmAnnouncementDelete('@announcement.Name')"*@>
+									<i class="fa fa-trash"></i>
+								</button>
+								@*<input type="hidden" name="announcementId" value="@announcement.Id" />*@
+							</form>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
 </section>
 
-<script>
-    $('.js-pscroll').each(function () {
-        var ps = new PerfectScrollbar(this);
+@section Scripts {
+	<script src="~/js/postManagement.js"></script>
 
-        $(window).on('resize', function () {
-            ps.update();
-        })
-    });
-</script>
+	<script>
+		$('.js-pscroll').each(function () {
+			var ps = new PerfectScrollbar(this);
+
+			$(window).on('resize', function () {
+				ps.update();
+			})
+		});
+	</script>
+}

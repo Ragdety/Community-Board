@@ -11,40 +11,48 @@
 </div>
 <hr class="text-black-50"/>
 <section>
-    <div class="container">
-        @if (Model.Announcements != null)
-        {
-            <div class="row">
-            @foreach (var announcement in Model.Announcements)
-            {
-                <div class="col-lg-4 mb-4">
-                    <div class="card">
-                        @if (announcement.Image != null)
-                        {
-                            <img src="@Model.RetrieveImage(announcement.Image)" alt="image" class="card-img-top">
-                        }
-                        <div class="card-body">
-                            <h5 class="card-title">@announcement.Name</h5>
-                            <p class="card-text">@announcement.Type</p>
-                            <p class="card-text">@announcement.Description</p>
-                            <a asp-page="/Contact" class="btn btn-outline-success btn-sm transition">
-                                Contact
-                            </a>
-                            <a asp-page="/Report" class="btn btn-outline-danger btn-sm float-right transition">
-                                <i class="fa fa-flag"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            }
-            </div>
-        }
-        else
-        {
-            <h1 class="lato-bold text-danger text-center">
-                There was an error with the server, please come back later.
-                We'll be fixing this soon (Hopefully...)
-            </h1>
-        }
-    </div>
+	<div class="container">
+		@if (Model.Announcements != null)
+		{
+			if (Model.Announcements.Count() > 0)
+			{
+				<div class="row">
+					@foreach (var announcement in Model.Announcements)
+					{
+						<div class="col-lg-4 mb-4">
+							<div class="card">
+								@if (announcement.Image != null)
+								{
+									<img src="@Model.RetrieveImage(announcement.Image)" alt="image" class="card-img-top">
+								}
+								<div class="card-body">
+									<h5 class="card-title">@announcement.Name</h5>
+									<p class="card-text">@announcement.Type</p>
+									<p class="card-text">@announcement.Description</p>
+									<a asp-page="/Contact" class="btn btn-outline-success btn-sm transition">
+										Contact
+									</a>
+									<a asp-page="/Report" class="btn btn-outline-danger btn-sm float-right transition">
+										<i class="fa fa-flag"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			}
+			else
+			{
+				<h3>No Announcements Available.</h3>
+			}
+
+		}
+		else
+		{
+			<h1 class="lato-bold text-danger text-center">
+				There was an error with the server, please come back later.
+				We'll be fixing this soon (Hopefully...)
+			</h1>
+		}
+	</div>
 </section>

@@ -77,7 +77,11 @@ namespace CommunityBoard.FrontEnd.Services.V1
 
         public async Task<bool> DeleteAnnouncementAsync(int id, string token)
         {
-            throw new System.NotImplementedException();
+            _httpClient.AddTokenToHeader(token);
+            var response = await _httpClient.DeleteAsync(
+                ApiRoutes.Announcements.Delete.Replace("{announcementId}", id.ToString()));
+
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<Announcement> GetAnnouncementByIdAsync(int id)
