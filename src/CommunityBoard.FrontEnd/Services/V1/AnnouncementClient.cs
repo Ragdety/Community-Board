@@ -5,7 +5,6 @@ using CommunityBoard.Core.Models;
 using CommunityBoard.FrontEnd.Extensions;
 using Microsoft.AspNetCore.Http;
 using System;
-//using CommunityBoard.FrontEnd.Extensions;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -63,15 +62,7 @@ namespace CommunityBoard.FrontEnd.Services.V1
         public async Task<bool> CreateAnnouncementAsync(CreateAnnouncementDto announcement, string token)
         {
             _httpClient.AddTokenToHeader(token);
-            var response = await _httpClient.PostAsJsonAsync(ApiRoutes.Announcements.Create, 
-                new CreateAnnouncementDto
-                {
-                    Name = announcement.Name,
-                    Type = announcement.Type,
-                    Description = announcement.Description,
-                    Image = announcement.Image
-                });
-
+            var response = await _httpClient.PostAsJsonAsync(ApiRoutes.Announcements.Create, announcement);
             return response.IsSuccessStatusCode;
         }
 
@@ -86,12 +77,22 @@ namespace CommunityBoard.FrontEnd.Services.V1
 
         public async Task<Announcement> GetAnnouncementByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var response = await _httpClient.GetAsync(
+                    ApiRoutes.Announcements.Get.Replace("{announcementId}", id.ToString()));
+
+            if (response.StatusCode == HttpStatusCode.NotFound ||
+                !response.IsSuccessStatusCode)
+                return null;
+
+            return await response.Content.ReadAsAsync<Announcement>();
         }
 
-        public async Task<bool> UpdateAnnouncementAsync(UpdateAnnouncementDto announcement, string token)
+        public async Task<bool> UpdateAnnouncementAsync(int id, UpdateAnnouncementDto announcement, string token)
         {
-            throw new System.NotImplementedException();
+            _httpClient.AddTokenToHeader(token);
+            var response = await _httpClient.PutAsJsonAsync(
+                ApiRoutes.Announcements.Update.Replace("{announcementId}", id.ToString()), announcement);
+            return response.IsSuccessStatusCode;
         }
     }
 }
