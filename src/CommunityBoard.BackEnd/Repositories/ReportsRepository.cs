@@ -1,6 +1,7 @@
-﻿using CommunityBoard.Core.Interfaces.Repositories;
+﻿using CommunityBoard.BackEnd.Data;
+using CommunityBoard.Core.Interfaces.Repositories;
 using CommunityBoard.Core.Models;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,29 +10,52 @@ namespace CommunityBoard.BackEnd.Repositories
 {
     public class ReportsRepository : IReportsRepository
     {
-        public Task<bool> CreateAsync(Report entity)
+        private readonly ApplicationDbContext _db;
+
+		public ReportsRepository(ApplicationDbContext db)
+		{
+            _db = db;
+		}
+
+        public async Task<bool> CreateAsync(Report report)
         {
-            throw new NotImplementedException();
+            await _db.AddAsync(report);
+            var created = await _db.SaveChangesAsync();
+            return created > 0;
         }
 
-        public Task<bool> DeleteAsync(object id)
+        public async Task<bool> DeleteAsync(object id)
         {
-            throw new NotImplementedException();
+            var report = await FindByIdAsync((int)id);
+            _db.Remove(report);
+            var deleted = await _db.SaveChangesAsync();
+            return deleted > 0;
         }
 
-        public Task<IList<Report>> FindAllAsync()
+        public async Task<IList<Report>> FindAllAsync()
         {
-            throw new NotImplementedException();
+            return await _db.Reports
+                .OrderByDescending(r => r.ReportDate)
+                .ToListAsync();
         }
 
-        public Task<Report> FindByIdAsync(object id)
+		public async Task<Report> FindByIdAsync(object id)
         {
-            throw new NotImplementedException();
+            return await _db.Reports.FirstOrDefaultAsync(r => r.Id == (int)id);
         }
 
-        public Task<bool> UpdateAsync(Report entityToUpdate)
+        public async Task<IList<Report>> FindAllReportsFromAnnouncement(int announcementId)
         {
-            throw new NotImplementedException();
+            return await _db.Reports
+                .Where(r => r.AnnouncementId == announcementId)
+                .ToListAsync();
+        }
+
+        public async Task<bool> UpdateAsync(Report reportToUpdate)
+        {
+            _db.Reports.Update(reportToUpdate);
+            var updated = await _db.SaveChangesAsync();
+            return updated > 0;
         }
     }
 }

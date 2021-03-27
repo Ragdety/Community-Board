@@ -25,7 +25,7 @@ namespace CommunityBoard.FrontEnd.Installers
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
                 {
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(3);
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(6);
 
                     options.Cookie.Name = "MyApplicationCookie";
                     options.LoginPath = "/Authentication/Register";

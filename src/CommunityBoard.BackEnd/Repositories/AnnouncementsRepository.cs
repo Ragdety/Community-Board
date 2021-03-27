@@ -33,7 +33,9 @@ namespace CommunityBoard.BackEnd.Repositories
 
         public async Task<IList<Announcement>> FindAllAsync()
         {
-            return await _db.Announcements.ToListAsync();
+            return await _db.Announcements
+                .OrderByDescending(x => x.CreatedAt)
+                .ToListAsync();
         }
 
         public async Task<Announcement> FindByIdAsync(object id)

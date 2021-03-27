@@ -19,6 +19,17 @@
             public const string GetFromUser = Base + "/announcements/user/";
         }
 
+        public static class Reports
+        {
+            public const string Create = Base + "/announcements/{announcementId}/reports";
+            public const string GetAll = Base + "/reports";
+            public const string Get = Base + "/reports/{reportId}";
+            public const string Delete = Base + "/reports/{reportId}";
+
+            //Extra
+            public const string GetAllFromAnnouncement = Base + "/announcements/{announcementId}/reports";
+        }
+
         //For simplicity purposes, we include the identity as a part of this API
         //This could be in a different server
         public static class Identity
