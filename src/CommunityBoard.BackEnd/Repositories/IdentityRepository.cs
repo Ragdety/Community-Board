@@ -23,19 +23,19 @@ namespace CommunityBoard.BackEnd.Repositories
         private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly ApplicationDbContext _db;
 
-        public IdentityRepository(
-            UserManager<User> userManager,
-            JwtSettings jwtSettings,
-            TokenValidationParameters tokenValidationParameters, 
-            ApplicationDbContext db)
-        {
-            _userManager = userManager;
-            _jwtSettings = jwtSettings;
-            _tokenValidationParameters = tokenValidationParameters;
-            _db = db;
-        }
+		public IdentityRepository(
+			UserManager<User> userManager,
+			JwtSettings jwtSettings,
+			TokenValidationParameters tokenValidationParameters,
+			ApplicationDbContext db)
+		{
+			_userManager = userManager;
+			_jwtSettings = jwtSettings;
+			_tokenValidationParameters = tokenValidationParameters;
+			_db = db;
+		}
 
-        public async Task<AuthenticationResult> LoginAsync(string emailOrUserName, string password)
+		public async Task<AuthenticationResult> LoginAsync(string emailOrUserName, string password)
         {
             User user;
             if (UserUtilities.IsValidEmail(emailOrUserName))
@@ -97,12 +97,20 @@ namespace CommunityBoard.BackEnd.Repositories
 
             //This will auto-hash password
             var createdUser = await _userManager.CreateAsync(newUser, password);
-
-            if (!createdUser.Succeeded)
+            if(!createdUser.Succeeded)
             {
                 return new AuthenticationResult
                 {
                     Errors = createdUser.Errors.Select(e => e.Description)
+                };
+            }
+
+            var createdUserRole = await _userManager.AddToRoleAsync(newUser, "User");
+            if(!createdUserRole.Succeeded)
+            {
+                return new AuthenticationResult
+                {
+                    Errors = createdUserRole.Errors.Select(e => e.Description)
                 };
             }
 

@@ -1,5 +1,4 @@
 ﻿using CommunityBoard.BackEnd.Data;
-using CommunityBoard.Core.Interfaces;
 using CommunityBoard.Core.Interfaces.Repositories;
 using CommunityBoard.Core.Models;
 using Microsoft.AspNetCore.Identity;
@@ -23,6 +22,7 @@ namespace CommunityBoard.BackEnd.Installers
                 options.Password.RequireUppercase = true;
                 options.Password.RequireNonAlphanumeric = false;
             })
+            .AddRoles<IdentityRole<int>>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
         }
     }

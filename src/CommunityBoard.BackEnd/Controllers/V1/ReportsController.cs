@@ -11,7 +11,9 @@ using System.Threading.Tasks;
 
 namespace CommunityBoard.BackEnd.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = 
+        JwtBearerDefaults.AuthenticationScheme,
+        Roles = "Admin")]
     public class ReportsController : Controller
     {
         private readonly IReportsRepository _reportsRepository;
