@@ -2,9 +2,8 @@
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.Interfaces.Clients;
 using CommunityBoard.Core.Models;
-using System;
+using CommunityBoard.FrontEnd.Extensions;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -28,24 +27,53 @@ namespace CommunityBoard.FrontEnd.Services.V1
 			return response.IsSuccessStatusCode;
 		}
 
-		public Task<bool> DeleteReportAsync(int id, string token)
+		public async Task<bool> DeleteReportAsync(int id, string token)
 		{
-			throw new NotImplementedException();
+			_httpClient.AddTokenToHeader(token);
+
+			var response = await _httpClient.DeleteAsync(
+				ApiRoutes.Reports.Delete.Replace("{reportId}", id.ToString()));
+
+			return response.IsSuccessStatusCode;
 		}
 
-		public Task<Tuple<List<Report>, string>> GetAnnouncementReportsAsync(int announcementId)
+		public async Task<List<Report>> GetAnnouncementReportsAsync(int announcementId, string token)
 		{
-			throw new NotImplementedException();
+			_httpClient.AddTokenToHeader(token);
+
+			var response = await _httpClient.GetAsync(
+				ApiRoutes.Reports.GetAllFromAnnouncement.Replace(
+					"{announcementId}", announcementId.ToString()));
+
+			if(!response.IsSuccessStatusCode)
+				return null;
+
+			return await response.Content.ReadAsAsync<List<Report>>();
 		}
 
-		public Task<Report> GetReportByIdAsync(int id)
+		public async Task<Report> GetReportByIdAsync(int id, string token)
 		{
-			throw new NotImplementedException();
+			_httpClient.AddTokenToHeader(token);
+
+			var response = await _httpClient.GetAsync(
+				ApiRoutes.Reports.Get.Replace(
+					"{reportId}", id.ToString()));
+
+			if (!response.IsSuccessStatusCode)
+				return null;
+
+			return await response.Content.ReadAsAsync<Report>();
 		}
 
-		public Task<List<Report>> GetReportsAsync()
+		public async Task<List<Report>> GetReportsAsync(string token)
 		{
-			throw new NotImplementedException();
+			_httpClient.AddTokenToHeader(token);
+
+			var response = await _httpClient.GetAsync(ApiRoutes.Reports.GetAll);
+			if(!response.IsSuccessStatusCode)
+				return null;
+
+			return await response.Content.ReadAsAsync<List<Report>>();
 		}
 	}
 }

@@ -8,6 +8,25 @@
       "files": [
         "dist/sweetalert.min.js"
       ]
+    },
+    {
+      "library": "ngx-perfect-scrollbar@10.1.0",
+      "destination": "wwwroot/lib/perfect-scrollbar/",
+      "files": [
+        "esm2015/ngx-perfect-scrollbar.js",
+        "esm2015/ngx-perfect-scrollbar.min.js"
+      ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jquery.perfect-scrollbar@1.5.0",
+      "destination": "wwwroot/lib/jquery.perfect-scrollbar/",
+      "files": [
+        "perfect-scrollbar.min.js",
+        "perfect-scrollbar.js",
+        "css/perfect-scrollbar.min.css",
+        "css/perfect-scrollbar.css"
+      ]
     }
   ]
 }
