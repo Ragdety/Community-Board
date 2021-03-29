@@ -1,42 +1,45 @@
-﻿@page
+﻿@page  "{announcementId}"
 @model CommunityBoard.FrontEnd.Pages.ReportModel
 @{
-    ViewData["Title"] = "Report";
+	ViewData["Title"] = "Report";
 }
 
 <link rel="stylesheet" href="~/css/custom.css" />
 
 <form method="POST"
-      autocomplete="off"
-      id="contact-author-form"
-      class="w-75 p-3 text-center signup-form ">
-    <h2>Report Announcement</h2>
-    <hr class="w-75 text-center m-auto pb-3" />
-    <div class="form-group">
-        <input type="text"
-               class="form-control"
-               name="report-reason"
-               placeholder="Report Reason"
-               required>
-    </div>
-    <div class="form-group">
-        <textarea class="form-control"
-                  name="report-body"
-                  required
-                  form="contact-author-form"
-                  placeholder="Report Body"
-                  rows="8"></textarea>
-    </div>
-    <div class="form-group">
-        <button type="submit"
-                class="btn btn-primary btn-lg transition-opacity">
-            Report
-        </button>
-    </div>
+	  autocomplete="off"
+	  id="report-form"
+	  class="w-75 p-3 text-center signup-form ">
+	<h2>Report Announcement</h2>
+	<hr class="w-75 text-center m-auto pb-3" />
+
+	@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+	<div class="form-group">
+		<input type="text"
+			   class="form-control"
+			   asp-for="ReportCause"
+			   placeholder="Report Cause (Ex: Terms of Use Violation)"
+			   required>
+	</div>
+	<div class="form-group">
+		<textarea class="form-control"
+				  asp-for="ReportDescription"
+				  required
+				  form="report-form"
+				  placeholder="Report Description"
+				  rows="8"></textarea>
+	</div>
+	@Html.HiddenFor(x => x.AnnouncementId)
+	<div class="form-group">
+		<button type="submit"
+				class="btn btn-primary btn-lg transition-opacity">
+			Report
+		</button>
+	</div>
 </form>
 
 <style>
-    textarea {
-        resize: none
-    }
+	textarea {
+		resize: none
+	}
 </style>

@@ -11,6 +11,11 @@ namespace CommunityBoard.FrontEnd.Installers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddHttpClient<IReportClient, ReportClient>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["serviceUrl"]);
+            });
+
             services.AddHttpClient<IAnnouncementClient, AnnouncementClient>(client =>
             {
                 client.BaseAddress = new Uri(configuration["serviceUrl"]);
