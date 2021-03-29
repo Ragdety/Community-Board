@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -204,6 +205,11 @@ namespace CommunityBoard.BackEnd.Repositories
             return await GenerateAuthResultAsync(user);
         }
 
+        private async Task<IEnumerable<string>> GetUserRoles(User user)
+		{
+            return await _userManager.GetRolesAsync(user);
+		}
+
         private ClaimsPrincipal GetPrincipalFromToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -247,6 +253,11 @@ namespace CommunityBoard.BackEnd.Repositories
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
             };
+
+			foreach (string role in await GetUserRoles(user))
+			{
+                tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, role));
+            }
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
