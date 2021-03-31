@@ -61,6 +61,17 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             });
         }
 
+        [HttpGet(ApiRoutes.Identity.GetUser)]
+        public async Task<IActionResult> GetUser([FromRoute] int userId)
+		{
+            var user = await _identityRepository.FindUserById(userId);
+
+            if (user == null)
+                return NotFound(new { Message = "User was not found." });
+
+            return Ok(user);
+		}
+
         [HttpPost(ApiRoutes.Identity.Refresh)]
         public async Task<IActionResult> Refresh([FromBody] RefreshTokenDto refreshTokenDto)
         {

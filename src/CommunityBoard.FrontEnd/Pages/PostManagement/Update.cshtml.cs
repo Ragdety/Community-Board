@@ -46,7 +46,7 @@ namespace CommunityBoard.FrontEnd.Pages.PostManagement
             CurrentAnnouncementId = id;
             OldAnnouncement = await _apiAnnouncementClient.GetAnnouncementByIdAsync(CurrentAnnouncementId);
             if (OldAnnouncement == null)
-                return NotFound();
+                return RedirectToPage("/Errors/NotFound");
 
             MapAnnouncementProperties();
             return null;

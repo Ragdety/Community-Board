@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Net;
+using System.Net.Mail;
 
 namespace CommunityBoard.FrontEnd.Installers
 {
@@ -21,8 +23,21 @@ namespace CommunityBoard.FrontEnd.Installers
             services.AddDistributedMemoryCache();
             services.AddSession();
 
-            //This added authentication to our site!
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+			services.AddFluentEmail("test@localhost.com")
+				.AddRazorRenderer()
+				.AddSmtpSender(new SmtpClient("localhost")
+				{
+					DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
+					PickupDirectoryLocation = configuration["TestEmailDirectory"]
+				    //EnableSsl = false,
+					//DeliveryMethod = SmtpDeliveryMethod.Network,
+					//Port = 25,
+					//UseDefaultCredentials= false,
+					//Credentials = new NetworkCredential("test@localhost.com", "Test1234")
+			    });
+
+			//This added authentication to our site!
+			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
                 {
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(6);

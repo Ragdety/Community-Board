@@ -130,3 +130,7 @@ fa-trash * {
 #editAnnouncement:hover {
     color: white;
 }
+
+#error-list ul {
+    list-style-type: none;
+}

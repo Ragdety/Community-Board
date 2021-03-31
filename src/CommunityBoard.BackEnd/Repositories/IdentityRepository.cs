@@ -2,6 +2,7 @@
 using CommunityBoard.BackEnd.Options;
 using CommunityBoard.BackEnd.Utilities;
 using CommunityBoard.Core.DomainObjects;
+using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.Interfaces.Repositories;
 using CommunityBoard.Core.Models;
 using Microsoft.AspNetCore.Identity;
@@ -116,6 +117,24 @@ namespace CommunityBoard.BackEnd.Repositories
             }
 
             return await GenerateAuthResultAsync(newUser);
+        }
+
+        public async Task<UserDto> FindUserById(int userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            if (user == null)
+                return null;
+
+            var userDto = new UserDto
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Email = user.Email
+            };
+
+            return userDto;
         }
 
         public async Task<AuthenticationResult> RefreshTokenAsync(string token, string refreshToken)
@@ -279,6 +298,6 @@ namespace CommunityBoard.BackEnd.Repositories
                 Token = tokenHandler.WriteToken(token),
                 RefreshToken = refreshToken.Token
             };
-        }
-    }
+        }	
+	}
 }

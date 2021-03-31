@@ -4,6 +4,7 @@ using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.DTOs.Responses;
 using CommunityBoard.Core.Interfaces.Clients;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -18,7 +19,18 @@ namespace CommunityBoard.FrontEnd.Services.V1
             _httpClient = httpClient;
         }
 
-        public async Task<AuthenticationResult> Login(UserLoginDto user)
+		public async Task<UserDto> GetUserById(int userId)
+		{
+            var response = await _httpClient.GetAsync(
+                ApiRoutes.Identity.GetUser.Replace("{userId}", userId.ToString()));
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return null;
+
+            return await response.Content.ReadAsAsync<UserDto>();
+		}
+
+		public async Task<AuthenticationResult> Login(UserLoginDto user)
         {
             var loginResponse = await _httpClient.PostAsJsonAsync(ApiRoutes.Identity.Login, user);
 
