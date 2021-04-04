@@ -75,7 +75,6 @@ namespace CommunityBoard.FrontEnd.Pages
 				.Body(EmailBody)
 				.SendAsync();
 
-
 			if (!emailResponse.Successful)
 			{
 				ModelState.AddModelError("EmailError", "Email could not be sent, try again later.");

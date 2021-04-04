@@ -1,5 +1,6 @@
 ﻿using CommunityBoard.BackEnd.Repositories;
 using CommunityBoard.Core.Interfaces.Repositories;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,7 +8,10 @@ namespace CommunityBoard.BackEnd.Installers
 {
     public class RepositoryInstaller : IInstaller
     {
-        public void InstallServices(IServiceCollection services, IConfiguration configuration)
+        public void InstallServices(
+            IServiceCollection services, 
+            IConfiguration configuration, 
+            IWebHostEnvironment environment)
         {
             services.AddScoped<IIdentityRepository, IdentityRepository>();
             services.AddScoped<IAnnouncementsRepository, AnnouncementsRepository>();

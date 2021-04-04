@@ -1,5 +1,6 @@
 ﻿using CommunityBoard.Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -10,7 +11,10 @@ namespace CommunityBoard.FrontEnd.Installers
 {
     public class RazorPagesInstaller : IInstaller
     {
-        public void InstallServices(IServiceCollection services, IConfiguration configuration)
+        public void InstallServices(
+            IServiceCollection services, 
+            IConfiguration configuration,
+            IWebHostEnvironment environment)
         {
             services.AddRazorPages(options =>
             {

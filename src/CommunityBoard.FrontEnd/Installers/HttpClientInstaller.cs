@@ -1,6 +1,7 @@
 ﻿using CommunityBoard.Core.Interfaces.Clients;
 using CommunityBoard.Core.Interfaces.Repositories;
 using CommunityBoard.FrontEnd.Services.V1;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -9,7 +10,10 @@ namespace CommunityBoard.FrontEnd.Installers
 {
     public class HttpClientInstaller : IInstaller
     {
-        public void InstallServices(IServiceCollection services, IConfiguration configuration)
+        public void InstallServices(
+            IServiceCollection services, 
+            IConfiguration configuration,
+            IWebHostEnvironment environment)
         {
             services.AddHttpClient<IReportClient, ReportClient>(client =>
             {

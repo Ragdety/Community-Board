@@ -8,6 +8,7 @@ namespace CommunityBoard.Core.Interfaces.Repositories
     {
         void InstallServices(
             IServiceCollection services, 
-            IConfiguration configuration);
+            IConfiguration configuration,
+            IWebHostEnvironment environment);
     }
 }

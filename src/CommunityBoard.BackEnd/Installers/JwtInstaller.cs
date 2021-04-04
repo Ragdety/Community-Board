@@ -1,6 +1,7 @@
 ﻿using CommunityBoard.BackEnd.Options;
 using CommunityBoard.Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -10,7 +11,10 @@ namespace CommunityBoard.BackEnd.Installers
 {
     public class JwtInstaller : IInstaller
     {
-        public void InstallServices(IServiceCollection services, IConfiguration configuration)
+        public void InstallServices(
+            IServiceCollection services, 
+            IConfiguration configuration,
+            IWebHostEnvironment environment)
         {
             var jwtSettings = new JwtSettings();
             configuration.Bind(nameof(jwtSettings), jwtSettings);

@@ -1,6 +1,7 @@
 ﻿using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.Interfaces.Clients;
 using CommunityBoard.Core.Models;
+using FluentEmail.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
@@ -10,10 +11,12 @@ namespace CommunityBoard.FrontEnd.Pages
     public class ReportModel : PageModel
     {
         private readonly IReportClient _reportClient;
+        private readonly IFluentEmail _emailSender;
 
-		public ReportModel(IReportClient reportClient)
+		public ReportModel(IReportClient reportClient, IFluentEmail emailSender)
 		{
 			_reportClient = reportClient;
+			_emailSender = emailSender;
 		}
 
 		[BindProperty]
@@ -38,7 +41,14 @@ namespace CommunityBoard.FrontEnd.Pages
                 ReportDescription = ReportDescription
             });
 
-            if(!success)
+            //Send email to admin
+            var emailResponse = await _emailSender
+                .To("test1@test.com")
+                .Subject("New Announcement Reported")
+                .Body($"Cause: {ReportCause}")
+                .SendAsync();
+
+            if (!success)
 			{
                 ModelState.AddModelError("Error", "An unknown error occured, try again later.");
                 return Page();
