@@ -1,5 +1,6 @@
 ﻿using CommunityBoard.BackEnd.Contracts.V1;
 using CommunityBoard.Core.DTOs;
+using CommunityBoard.Core.DTOs.Responses;
 using CommunityBoard.Core.Enums;
 using CommunityBoard.Core.Models;
 using FluentAssertions;
@@ -56,5 +57,59 @@ namespace CommunityBoard.IntegrationTests
             returnedAnnouncement.Description.Should().Be("Test Description");
             returnedAnnouncement.Image.Should().BeNull();
         }
+
+        [Fact]
+        public async Task Create_ReturnsOk_WhenCreatedSuccessfully()
+		{
+            //Arrange
+            await AuthenticateAsync();
+            await LoginAsync(); //Adds token
+            var createdAnnouncement = new CreateAnnouncementDto
+            {
+                Name = "Create Integration Test",
+                Type = "Sale",
+                Description = "Create Integration Test Description",
+                Image = null
+            };
+
+            //Act
+            var response = await TestClient.PostAsJsonAsync(
+                ApiRoutes.Announcements.Create, createdAnnouncement);
+            var content = await response.Content.ReadAsAsync<AnnouncementResponse>();
+
+            //Assert
+            response.StatusCode.Should().Be(HttpStatusCode.Created);
+            content.Should().NotBeNull();
+            content.Should().BeOfType<AnnouncementResponse>();
+        }
+
+        [Fact]
+        public async Task Create_ReturnsUnauthorized_WhenNotLoggedIn()
+        {
+            //Arrange
+            var createdAnnouncement = new CreateAnnouncementDto
+            {
+                Name = "Not logged in test",
+                Type = "Other",
+                Description = "Not logged in test description",
+                Image = null
+            };
+
+            //Act
+            var response = await TestClient.PostAsJsonAsync(
+                ApiRoutes.Announcements.Create, createdAnnouncement);
+
+            //Assert
+            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        }
+
+        //Arrange
+
+
+        //Act
+
+
+        //Assert
+
     }
 }
