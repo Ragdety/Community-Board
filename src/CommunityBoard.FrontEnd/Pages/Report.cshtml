@@ -19,6 +19,7 @@
 			   class="form-control"
 			   asp-for="ReportCause"
 			   placeholder="Report Cause (Ex: Terms of Use Violation)"
+			   maxlength="100"
 			   required>
 	</div>
 	<div class="form-group">
@@ -27,6 +28,7 @@
 				  required
 				  form="report-form"
 				  placeholder="Report Description"
+				  maxlength="300"
 				  rows="8"></textarea>
 	</div>
 	@Html.HiddenFor(x => x.AnnouncementId)

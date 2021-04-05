@@ -23,6 +23,7 @@
             <input type="text"
                    class="form-control"
                    asp-for="Name"
+                   maxlength="80"
                    placeholder="Name"
                    required>
         </div>
@@ -45,6 +46,7 @@
         <div class="form-group">
             <textarea class="form-control"
                       asp-for="Description"
+                      maxlength="300"
                       required
                       form="create-announcement"
                       placeholder="Description"
