@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql2": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroup')]/providers/Microsoft.Sql/servers/communityboarddb/databases/CommunityBoardDb",
+      "type": "mssql.azure",
+      "connectionId": "CommunityBoard",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}

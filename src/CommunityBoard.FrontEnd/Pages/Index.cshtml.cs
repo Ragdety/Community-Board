@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.Interfaces.Clients;
 using CommunityBoard.Core.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
@@ -13,20 +15,32 @@ namespace CommunityBoard.FrontEnd.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly IAnnouncementClient _apiAnnouncementClient;
 
-        public IndexModel(ILogger<IndexModel> logger, IAnnouncementClient apiAnnouncementClient)
-        {
-            _logger = logger;
-            _apiAnnouncementClient = apiAnnouncementClient;
-        }
+		public IndexModel(
+            ILogger<IndexModel> logger, 
+            IAnnouncementClient apiAnnouncementClient)
+		{
+			_logger = logger;
+			_apiAnnouncementClient = apiAnnouncementClient;
+		}
 
-        public IEnumerable<Announcement> Announcements;
+		public IEnumerable<Announcement> Announcements { get; set; }
 
-        public async Task OnGet()
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; }
+
+        public async Task OnGetAsync()
         {
             try
             {
-				//Use Url.Page("PagePath", objectValues of url here)
-                Announcements = await _apiAnnouncementClient.GetAnnouncementsAsync();
+                if (string.IsNullOrEmpty(SearchTerm))
+                {
+                    Announcements = await _apiAnnouncementClient.GetAnnouncementsAsync();
+                }
+                else
+                {
+                    Announcements = await _apiAnnouncementClient
+                        .GetAnnouncementsByNameAsync(SearchTerm.Trim());
+                }
             }
             catch { }
         }

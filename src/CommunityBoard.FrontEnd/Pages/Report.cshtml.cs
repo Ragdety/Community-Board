@@ -43,12 +43,12 @@ namespace CommunityBoard.FrontEnd.Pages
 
             //Send email to admin
             var emailResponse = await _emailSender
-                .To("test1@test.com")
+                .To("cis1512.communityboard@gmail.com")
                 .Subject("New Announcement Reported")
                 .Body($"Cause: {ReportCause}")
                 .SendAsync();
 
-            if (!success)
+            if (!success || !emailResponse.Successful)
 			{
                 ModelState.AddModelError("Error", "An unknown error occured, try again later.");
                 return Page();

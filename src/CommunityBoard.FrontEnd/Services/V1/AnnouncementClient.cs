@@ -32,6 +32,18 @@ namespace CommunityBoard.FrontEnd.Services.V1
             return await response.Content.ReadAsAsync<List<Announcement>>();
         }
 
+        public async Task<List<Announcement>> GetAnnouncementsByNameAsync(string name)
+		{
+            var response = await _httpClient.GetAsync(
+                ApiRoutes.Announcements.GetByName
+                .Replace("{announcementName}", name));
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return null;
+
+            return await response.Content.ReadAsAsync<List<Announcement>>();
+		}
+
         public async Task<Tuple<List<Announcement>, string>> 
             GetUserAnnouncementsAsync(int userId, string token)
         {

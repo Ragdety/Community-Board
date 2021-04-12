@@ -1,7 +1,9 @@
 ﻿using CommunityBoard.BackEnd.Data;
+using CommunityBoard.Core.Enums;
 using CommunityBoard.Core.Interfaces.Repositories;
 using CommunityBoard.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,6 +56,25 @@ namespace CommunityBoard.BackEnd.Repositories
         {
             return await _db.Announcements
                 .Where(a => a.UserId == userId)
+                .ToListAsync();
+        }
+
+        public async Task<IList<Announcement>> FindAnnouncementsByName(string name)
+		{
+            if(string.IsNullOrEmpty(name))
+			{
+                return await FindAllAsync();
+            }
+
+            return await _db.Announcements
+                .Where(a => a.Name.Contains(name))
+                .ToListAsync();
+		}
+
+        public async Task<IList<Announcement>> FindAnnouncementsByType(AnnouncementType type)
+        {
+            return await _db.Announcements
+                .Where(a => a.Type == type)
                 .ToListAsync();
         }
 

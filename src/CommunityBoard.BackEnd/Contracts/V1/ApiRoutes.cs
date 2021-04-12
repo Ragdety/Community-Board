@@ -17,6 +17,9 @@
 
             //Extra
             public const string GetFromUser = Base + "/announcements/user/";
+
+            //Like this for now, may implement API Filtering (and pagination) later
+            public const string GetByName = Base + "/announcements/name={announcementName}";
         }
 
         public static class Reports

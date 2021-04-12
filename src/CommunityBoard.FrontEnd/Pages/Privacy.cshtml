@@ -3,6 +3,26 @@
 @{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>All user data in our website is not secure and private...yet</p>
+<section class="container">
+	<h1>@ViewData["Title"]</h1>
+	<p>Privacy and security have been done to the best of our ability.</p>
+	<ul>
+		<li>
+			Passwords cannot be seen by any of our administrators (as they are hashed).
+		</li>
+		<li>
+			Both frontend and backend server are https.
+		</li>
+		<li>
+			SSL (Secure Sockets Layer) is enabled when sending email,
+			which allows the encryption of data sent over the internet.
+		</li>
+		<li>
+			Sessions end after 6 minutes to prevent data exposure.
+		</li>
+		<li>
+			Cookies are in use. 
+		</li>
+	</ul>
+</section>

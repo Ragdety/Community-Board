@@ -75,6 +75,13 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             return Ok(announcement);
         }
 
+        [AllowAnonymous]
+        [HttpGet(ApiRoutes.Announcements.GetByName)]
+        public async Task<IActionResult> GetByName([FromRoute] string announcementName)
+		{
+            return Ok(await _announcementRepository.FindAnnouncementsByName(announcementName));
+		}
+
         [HttpPut(ApiRoutes.Announcements.Update)]
         public async Task<IActionResult> Update(
             [FromRoute] int announcementId,

@@ -12,14 +12,26 @@
 <hr class="text-black-50"/>
 <section>
 	<div class="container">
+		<form method="GET" class="text-center pb-4">
+			<div class="input-group">
+				<input type="text" asp-for="SearchTerm" 
+					   class="form-control"
+					   placeholder="Start Searching!"/>
+				<div class="input-group-append">
+					<button type="submit" class="btn btn-primary">
+						Search
+					</button>
+				</div>
+			</div>
+		</form>
 		@if (Model.Announcements != null)
 		{
 			if (Model.Announcements.Count() > 0)
 			{
-				<div class="row">
+				<div class=" grid" style="column-count: 3">
 					@foreach (var announcement in Model.Announcements)
 					{
-						<div class="col-lg-4 mb-4">
+						<div class="col-lg-4 mb-4 grid-item">
 							<div class="card">
 								@if (announcement.Image != null)
 								{
@@ -29,11 +41,13 @@
 									<h5 class="card-title">@announcement.Name</h5>
 									<p class="card-text">@announcement.Type</p>
 									<p class="card-text">@announcement.Description</p>
-									<a href="@Url.Page("/Contact", new { announcementId = announcement.Id })" 
+								</div>
+								<div class="card-footer">
+									<a href="@Url.Page("/Contact", new { announcementId = announcement.Id })"
 									   class="btn btn-outline-success btn-sm transition">
 										Contact
 									</a>
-									<a href="@Url.Page("/Report", new { announcementId = announcement.Id })" 
+									<a href="@Url.Page("/Report", new { announcementId = announcement.Id })"
 									   class="btn btn-outline-danger btn-sm float-right transition">
 										<i class="fa fa-flag"></i>
 									</a>
@@ -45,16 +59,31 @@
 			}
 			else
 			{
-				<h3>No Announcements Available.</h3>
+				<h1 class="lato-bold text-danger text-center">
+					No Announcements Found.
+				</h1>
 			}
-
 		}
-		else
-		{
+		else 
+		{ 
 			<h1 class="lato-bold text-danger text-center">
+				No Announcements Found.
+			</h1>
+
+			@*<h1 class="lato-bold text-danger text-center">
 				There was an error with the server, please come back later.
 				We'll be fixing this soon (Hopefully...)
-			</h1>
+			</h1>*@
 		}
 	</div>
 </section>
+
+@section Scripts {
+	<script>
+		$('.grid').masonry({
+			itemSelector: '.grid-item',
+			columnWidth: 160,
+			gutter: 20
+		});
+	</script>
+}
