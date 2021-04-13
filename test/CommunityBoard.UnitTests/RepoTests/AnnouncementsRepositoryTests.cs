@@ -14,7 +14,7 @@ namespace CommunityBoard.UnitTests.RepoTests
             _fixture = fixture;
         }
 
-        [Fact]
+        //[Fact]
         public async Task FindALL_ReturnsNull_WhenDoesNotExist()
         {
             var announcements = await _fixture._repo.FindAllAsync();

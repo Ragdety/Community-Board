@@ -72,6 +72,11 @@ namespace CommunityBoard.IntegrationTests
                 new AuthenticationHeaderValue("bearer", await GetJwtLoginAsync());
         }
 
+        protected void Logout()
+		{
+            TestClient.DefaultRequestHeaders.Authorization = null;
+        }
+
         protected async Task<AnnouncementResponse> CreateAnnouncementAsync(
             CreateAnnouncementDto createAnnouncementDto)
         {
