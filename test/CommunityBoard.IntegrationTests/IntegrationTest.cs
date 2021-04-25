@@ -13,6 +13,7 @@ using System;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
+using CommunityBoard.Core.Models;
 
 namespace CommunityBoard.IntegrationTests
 {
@@ -53,7 +54,10 @@ namespace CommunityBoard.IntegrationTests
                             var roleManager =
                                 scopedServices.GetRequiredService<RoleManager<IdentityRole<int>>>();
 
+                            var userManager = scopedServices.GetRequiredService<UserManager<User>>();
+
                             await AddRolesAsync(roleManager);
+                            await RegisterAsAdminAsync(userManager);
                         }
                     });
                 });
@@ -72,7 +76,41 @@ namespace CommunityBoard.IntegrationTests
                 new AuthenticationHeaderValue("bearer", await GetJwtLoginAsync());
         }
 
-        protected void Logout()
+		protected async Task LoginAsAdminAsync()
+        {
+            TestClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("bearer", await GetAdminJwtLoginAsync());
+        }
+
+        private async Task RegisterAsAdminAsync(UserManager<User> userManager)
+		{
+            var user = new User
+            {
+                FirstName = "AdminTest",
+                LastName = "AdminTest",
+                UserName = "AdminTest",
+                Email = "AdminTest@integrationTests.com",
+                DateRegistered = DateTime.UtcNow
+            };
+
+            await userManager.CreateAsync(user, "Test1234");
+            await userManager.AddToRoleAsync(user, "Admin");
+        }
+
+        private async Task<string> GetAdminJwtLoginAsync()
+		{
+            var response = await TestClient.PostAsJsonAsync(
+                ApiRoutes.Identity.Login, new UserLoginDto
+                {
+                    EmailOrUserName = "AdminTest",
+                    Password = "Test1234",
+                });
+
+            var registraionResponse = await response.Content.ReadAsAsync<AuthSuccessResponse>();
+            return registraionResponse.Token;
+        }
+
+		protected void Logout()
 		{
             TestClient.DefaultRequestHeaders.Authorization = null;
         }
