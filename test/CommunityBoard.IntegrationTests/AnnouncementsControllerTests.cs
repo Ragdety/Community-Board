@@ -2,7 +2,7 @@
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.DTOs.Responses;
 using CommunityBoard.Core.Enums;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using FluentAssertions;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using Xunit;
 
 namespace CommunityBoard.IntegrationTests
 {
-    public class AnnouncementsControllerTests : IntegrationTest
+	public class AnnouncementsControllerTests : IntegrationTest
     {
         [Fact]
         public async Task Create_ReturnsUnauthorized_WhenNotLoggedIn()

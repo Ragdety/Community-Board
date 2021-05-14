@@ -13,11 +13,11 @@ using System;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 
 namespace CommunityBoard.IntegrationTests
 {
-    public class IntegrationTest
+	public class IntegrationTest
     {
         protected readonly HttpClient TestClient;
 

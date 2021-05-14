@@ -1,12 +1,12 @@
-﻿using CommunityBoard.Core.Models;
-using CommunityBoard.Core.DTOs;
+﻿using CommunityBoard.Core.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using CommunityBoard.Core.Models.CoreModels;
 
 namespace CommunityBoard.Core.Interfaces.Clients
 {
-    public interface IAnnouncementClient
+	public interface IAnnouncementClient
     {
         Task<List<Announcement>> GetAnnouncementsAsync();
         Task<List<Announcement>> GetAnnouncementsByNameAsync(string name);

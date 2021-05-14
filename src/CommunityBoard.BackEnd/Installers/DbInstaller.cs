@@ -1,6 +1,6 @@
 ﻿using CommunityBoard.BackEnd.Data;
 using CommunityBoard.Core.Interfaces.Repositories;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CommunityBoard.BackEnd.Installers
 {
-    public class DbInstaller : IInstaller
+	public class DbInstaller : IInstaller
     {
         public void InstallServices(
             IServiceCollection services, 

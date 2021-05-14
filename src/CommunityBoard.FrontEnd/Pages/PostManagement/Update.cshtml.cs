@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.Enums;
 using CommunityBoard.Core.Interfaces.Clients;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using CommunityBoard.FrontEnd.Attributes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CommunityBoard.FrontEnd.Pages.PostManagement
 {
-    public class UpdateModel : PageModel
+	public class UpdateModel : PageModel
     {
         private readonly IAnnouncementClient _apiAnnouncementClient;
 

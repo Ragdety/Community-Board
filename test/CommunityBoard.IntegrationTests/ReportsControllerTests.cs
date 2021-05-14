@@ -1,7 +1,7 @@
 ﻿using CommunityBoard.BackEnd.Contracts.V1;
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.DTOs.Responses;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using FluentAssertions;
 using Newtonsoft.Json;
 using System.Collections.Generic;

@@ -1,13 +1,14 @@
 ﻿using CommunityBoard.Core.DomainObjects;
 using CommunityBoard.Core.Interfaces;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CommunicationModels;
+using CommunityBoard.Core.Models.CoreModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CommunityBoard.BackEnd.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<int>, int>
+	public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -29,6 +30,11 @@ namespace CommunityBoard.BackEnd.Data
             builder.Entity<Announcement>()
                 .Property(p => p.Type)
                 .HasColumnType("nvarchar(50)");
+
+            builder.Entity<Message>()
+                .HasOne(u => u.Sender)
+                .WithMany(m => m.Messages)
+                .HasForeignKey(f => f.UserId);
         }
     }
 }

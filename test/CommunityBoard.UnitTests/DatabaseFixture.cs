@@ -1,12 +1,12 @@
 ﻿using CommunityBoard.BackEnd.Data;
 using CommunityBoard.BackEnd.Repositories;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace CommunityBoard.UnitTests
 {
-    public class DatabaseFixture 
+	public class DatabaseFixture 
     {
         private ApplicationDbContext _db;
         public AnnouncementsRepository _repo;

@@ -1,5 +1,5 @@
 ﻿using CommunityBoard.Core.Interfaces.Clients;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CommunityBoard.FrontEnd.Pages.PostManagement
 {
-    public class ManageModel : PageModel
+	public class ManageModel : PageModel
     {
         private readonly IAnnouncementClient _apiAnnouncementClient;
 

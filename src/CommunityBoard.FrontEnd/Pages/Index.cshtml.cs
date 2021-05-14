@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.Interfaces.Clients;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
 namespace CommunityBoard.FrontEnd.Pages
 {
-    public class IndexModel : PageModel
+	public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IAnnouncementClient _apiAnnouncementClient;

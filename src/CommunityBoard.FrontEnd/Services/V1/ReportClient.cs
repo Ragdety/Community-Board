@@ -1,7 +1,7 @@
 ﻿using CommunityBoard.BackEnd.Contracts.V1;
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.Interfaces.Clients;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using CommunityBoard.FrontEnd.Extensions;
 using System.Collections.Generic;
 using System.Net.Http;

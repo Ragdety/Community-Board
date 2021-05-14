@@ -1,5 +1,5 @@
 ﻿using CommunityBoard.Core.DTOs;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

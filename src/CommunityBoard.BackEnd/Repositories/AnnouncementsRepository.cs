@@ -1,7 +1,7 @@
 ﻿using CommunityBoard.BackEnd.Data;
 using CommunityBoard.Core.Enums;
 using CommunityBoard.Core.Interfaces.Repositories;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CommunityBoard.BackEnd.Repositories
 {
-    public class AnnouncementsRepository : IAnnouncementsRepository
+	public class AnnouncementsRepository : IAnnouncementsRepository
     {
         private readonly ApplicationDbContext _db;
         public AnnouncementsRepository(ApplicationDbContext db)

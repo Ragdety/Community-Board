@@ -4,7 +4,7 @@ using CommunityBoard.BackEnd.Utilities;
 using CommunityBoard.Core.DomainObjects;
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.Interfaces.Repositories;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace CommunityBoard.BackEnd.Repositories
 {
-    public class IdentityRepository : IIdentityRepository
+	public class IdentityRepository : IIdentityRepository
     {
         private readonly UserManager<User> _userManager;
         private readonly JwtSettings _jwtSettings;

@@ -1,6 +1,6 @@
 ﻿using CommunityBoard.BackEnd.Data;
 using CommunityBoard.Core.Interfaces.Repositories;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CommunityBoard.BackEnd.Repositories
 {
-    public class ReportsRepository : IReportsRepository
+	public class ReportsRepository : IReportsRepository
     {
         private readonly ApplicationDbContext _db;
 

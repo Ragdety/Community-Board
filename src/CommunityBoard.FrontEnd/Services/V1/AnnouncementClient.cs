@@ -1,7 +1,7 @@
 ﻿using CommunityBoard.BackEnd.Contracts.V1;
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.Interfaces.Clients;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using CommunityBoard.FrontEnd.Extensions;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace CommunityBoard.FrontEnd.Services.V1
 {
-    public class AnnouncementClient : IAnnouncementClient
+	public class AnnouncementClient : IAnnouncementClient
     {
         private readonly HttpClient _httpClient;
 

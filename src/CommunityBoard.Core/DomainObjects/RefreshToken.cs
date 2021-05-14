@@ -1,11 +1,11 @@
-﻿using CommunityBoard.Core.Models;
+﻿using CommunityBoard.Core.Models.CoreModels;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CommunityBoard.Core.DomainObjects
 {
-    public class RefreshToken
+	public class RefreshToken
     {
         [Key]
         public string Token { get; set; }

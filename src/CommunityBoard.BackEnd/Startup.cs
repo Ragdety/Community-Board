@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CommunityBoard.Core.Interfaces;
 using CommunityBoard.BackEnd.Installers;
+using CommunityBoard.BackEnd.Hubs;
 
 namespace CommunityBoard.BackEnd
 {
@@ -30,13 +31,11 @@ namespace CommunityBoard.BackEnd
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.InstallServicesInAssembly(Configuration, Environment);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -46,7 +45,6 @@ namespace CommunityBoard.BackEnd
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -68,6 +66,7 @@ namespace CommunityBoard.BackEnd
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/Inbox/{UserName}");
             });
         }
     }

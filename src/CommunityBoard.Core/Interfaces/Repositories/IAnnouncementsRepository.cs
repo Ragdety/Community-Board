@@ -1,11 +1,11 @@
 ﻿using CommunityBoard.Core.Enums;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CommunityBoard.Core.Interfaces.Repositories
 {
-    public interface IAnnouncementsRepository : IGenericRepository<Announcement>
+	public interface IAnnouncementsRepository : IGenericRepository<Announcement>
     {
         Task<IList<Announcement>> FindAllUserAnnouncements(int userId);
         Task<bool> UserOwnsAnnouncementAsync(int announcementId, int userId);

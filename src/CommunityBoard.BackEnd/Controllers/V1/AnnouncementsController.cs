@@ -4,7 +4,7 @@ using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.DTOs.Responses;
 using CommunityBoard.Core.Enums;
 using CommunityBoard.Core.Interfaces.Repositories;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace CommunityBoard.BackEnd.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AnnouncementsController : Controller
     {
         private readonly IAnnouncementsRepository _announcementRepository;

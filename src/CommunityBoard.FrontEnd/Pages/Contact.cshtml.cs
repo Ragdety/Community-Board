@@ -4,7 +4,7 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.Interfaces.Clients;
-using CommunityBoard.Core.Models;
+using CommunityBoard.Core.Models.CoreModels;
 using FluentEmail.Core;
 using FluentEmail.Smtp;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CommunityBoard.FrontEnd.Pages
 {
-    public class ContactModel : PageModel
+	public class ContactModel : PageModel
     {
         private readonly IAnnouncementClient _apiAnnouncementClient;
         private readonly IIdentityClient _identityClient;
