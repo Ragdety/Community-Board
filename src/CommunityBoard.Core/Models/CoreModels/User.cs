@@ -19,11 +19,6 @@ namespace CommunityBoard.Core.Models.CoreModels
 		[Required]
 		public DateTime DateRegistered { get; set; }
 
-		public virtual ICollection<Message> Messages { get; set; }
-
-		public User()
-		{
-			Messages = new HashSet<Message>();
-		}
+		public ICollection<ChatUser> Chats { get; set; }
 	}
 }

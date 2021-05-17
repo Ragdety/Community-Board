@@ -49,6 +49,33 @@ namespace CommunityBoard.BackEnd.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
+            modelBuilder.Entity("CommunityBoard.Core.Models.CommunicationModels.Chat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("CommunityBoard.Core.Models.CommunicationModels.ChatUser", b =>
+                {
+                    b.Property<int>("ChatId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ChatId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ChatUsers");
+                });
+
             modelBuilder.Entity("CommunityBoard.Core.Models.CommunicationModels.Message", b =>
                 {
                     b.Property<int>("Id")
@@ -56,15 +83,15 @@ namespace CommunityBoard.BackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("ChatId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -72,9 +99,9 @@ namespace CommunityBoard.BackEnd.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ChatId");
 
-                    b.ToTable("Message");
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("CommunityBoard.Core.Models.CoreModels.Announcement", b =>
@@ -363,11 +390,26 @@ namespace CommunityBoard.BackEnd.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("CommunityBoard.Core.Models.CommunicationModels.ChatUser", b =>
+                {
+                    b.HasOne("CommunityBoard.Core.Models.CommunicationModels.Chat", "Chat")
+                        .WithMany("Users")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CommunityBoard.Core.Models.CoreModels.User", "User")
+                        .WithMany("Chats")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CommunityBoard.Core.Models.CommunicationModels.Message", b =>
                 {
-                    b.HasOne("CommunityBoard.Core.Models.CoreModels.User", "Sender")
+                    b.HasOne("CommunityBoard.Core.Models.CommunicationModels.Chat", "Chat")
                         .WithMany("Messages")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("ChatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

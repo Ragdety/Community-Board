@@ -1,5 +1,4 @@
-﻿using CommunityBoard.Core.Models.CoreModels;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace CommunityBoard.Core.Models.CommunicationModels
@@ -11,14 +10,15 @@ namespace CommunityBoard.Core.Models.CommunicationModels
 
 		[Required]
 		public string Text { get; set; }
-
-		public DateTime Date { get; set; }
+		
+		[Required]
+		public DateTime Timestamp { get; set; }
 
 		[Required]
 		public string UserName { get; set; }
 
-		public int UserId { get; set; }
+		public int ChatId { get; set; }
 
-		public virtual User Sender { get; set; }
+		public virtual Chat Chat { get; set; }
 	}
 }

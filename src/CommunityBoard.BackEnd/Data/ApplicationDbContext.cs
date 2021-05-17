@@ -19,6 +19,9 @@ namespace CommunityBoard.BackEnd.Data
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<ChatUser> ChatUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -31,10 +34,18 @@ namespace CommunityBoard.BackEnd.Data
                 .Property(p => p.Type)
                 .HasColumnType("nvarchar(50)");
 
-            builder.Entity<Message>()
-                .HasOne(u => u.Sender)
-                .WithMany(m => m.Messages)
-                .HasForeignKey(f => f.UserId);
+            builder.Entity<ChatUser>()
+                .HasKey(x => new { x.ChatId, x.UserId });
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
