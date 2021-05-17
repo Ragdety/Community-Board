@@ -8,54 +8,19 @@ using System.Threading.Tasks;
 
 namespace CommunityBoard.BackEnd.Repositories
 {
-	public class ReportsRepository : IReportsRepository
+	public class ReportsRepository : GenericRepository<Report>, IReportsRepository
     {
-        private readonly ApplicationDbContext _db;
-
-		public ReportsRepository(ApplicationDbContext db)
-		{
-            _db = db;
-		}
-
-        public async Task<bool> CreateAsync(Report report)
+        private readonly DbSet<Report> _reports;
+		public ReportsRepository(ApplicationDbContext db) : base(db)
         {
-            await _db.AddAsync(report);
-            var created = await _db.SaveChangesAsync();
-            return created > 0;
-        }
-
-        public async Task<bool> DeleteAsync(object id)
-        {
-            var report = await FindByIdAsync((int)id);
-            _db.Remove(report);
-            var deleted = await _db.SaveChangesAsync();
-            return deleted > 0;
-        }
-
-        public async Task<IList<Report>> FindAllAsync()
-        {
-            return await _db.Reports
-                .OrderByDescending(r => r.ReportDate)
-                .ToListAsync();
-        }
-
-		public async Task<Report> FindByIdAsync(object id)
-        {
-            return await _db.Reports.FirstOrDefaultAsync(r => r.Id == (int)id);
+            _reports = db.Set<Report>();
         }
 
         public async Task<IList<Report>> FindAllReportsFromAnnouncement(int announcementId)
         {
-            return await _db.Reports
+            return await _reports
                 .Where(r => r.AnnouncementId == announcementId)
                 .ToListAsync();
-        }
-
-        public async Task<bool> UpdateAsync(Report reportToUpdate)
-        {
-            _db.Reports.Update(reportToUpdate);
-            var updated = await _db.SaveChangesAsync();
-            return updated > 0;
         }
     }
 }

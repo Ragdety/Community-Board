@@ -117,7 +117,9 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             if (!userOwnsAnnouncement)
                 return BadRequest(new { Error = "You do not own this announcement" });
 
-            var deleted = await _announcementRepository.DeleteAsync(announcementId);
+            var announcementToDelete = await _announcementRepository.FindByIdAsync(announcementId);
+            
+            var deleted = await _announcementRepository.DeleteAsync(announcementToDelete);
             if (deleted)
                 return NoContent();
 

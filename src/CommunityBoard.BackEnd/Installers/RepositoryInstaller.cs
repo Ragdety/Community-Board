@@ -1,4 +1,5 @@
 ﻿using CommunityBoard.BackEnd.Repositories;
+using CommunityBoard.BackEnd.Repositories.CommunicationRepos;
 using CommunityBoard.Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -13,9 +14,11 @@ namespace CommunityBoard.BackEnd.Installers
             IConfiguration configuration, 
             IWebHostEnvironment environment)
         {
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IIdentityRepository, IdentityRepository>();
             services.AddScoped<IAnnouncementsRepository, AnnouncementsRepository>();
             services.AddScoped<IReportsRepository, ReportsRepository>();
+            services.AddScoped<IChatsRepository, ChatsRepository>();
         }
     }
 }

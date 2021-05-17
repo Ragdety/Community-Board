@@ -1,35 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using CommunityBoard.BackEnd.Data;
 using CommunityBoard.Core.Interfaces.Repositories;
 using CommunityBoard.Core.Models.CommunicationModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace CommunityBoard.BackEnd.Repositories.CommunicationRepos
 {
-    public class ChatsRepository : IGenericRepository<Chat>
+    public class ChatsRepository : GenericRepository<Chat>, IChatsRepository
     {
-        public Task<bool> CreateAsync(Chat entity)
+        private readonly DbSet<Chat> _chats;
+        
+        public ChatsRepository(ApplicationDbContext db) : base(db)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IList<Chat>> FindAllAsync()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<Chat> FindByIdAsync(object id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<bool> UpdateAsync(Chat entityToUpdate)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<bool> DeleteAsync(object id)
-        {
-            throw new System.NotImplementedException();
+            _chats = db.Set<Chat>();
         }
     }
 }

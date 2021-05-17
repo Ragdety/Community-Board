@@ -72,7 +72,9 @@ namespace CommunityBoard.BackEnd.Controllers.V1
         [HttpDelete(ApiRoutes.Reports.Delete)]
         public async Task<IActionResult> Delete([FromRoute] int reportId)
         {
-            var deleted = await _reportsRepository.DeleteAsync(reportId);
+            var reportToDelete = await _reportsRepository.FindByIdAsync(reportId);
+            
+            var deleted = await _reportsRepository.DeleteAsync(reportToDelete);
             if (deleted)
                 return NoContent();
 
