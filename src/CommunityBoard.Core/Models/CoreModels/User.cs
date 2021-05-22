@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CommunityBoard.Core.Models.CoreModels
 {
@@ -18,7 +19,7 @@ namespace CommunityBoard.Core.Models.CoreModels
 
 		[Required]
 		public DateTime DateRegistered { get; set; }
-
+		
 		public ICollection<ChatUser> Chats { get; set; }
 	}
 }

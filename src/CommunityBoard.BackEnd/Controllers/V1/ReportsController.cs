@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
-namespace CommunityBoard.BackEnd.Controllers.V1
+namespace CommunityBoard.BackEnd.Controllers.V1.CommunicationControllers
 {
 	[Authorize(AuthenticationSchemes = 
         JwtBearerDefaults.AuthenticationScheme,

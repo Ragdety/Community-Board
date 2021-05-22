@@ -8,7 +8,7 @@ namespace CommunityBoard.Core.Models.CommunicationModels
         public Chat()
         {
             Messages = new List<Message>();
-            Users = new List<ChatUser>();
+            Users = new HashSet<ChatUser>();
         }
         
         public int Id { get; set; }

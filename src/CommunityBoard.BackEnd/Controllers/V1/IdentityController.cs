@@ -5,7 +5,7 @@ using CommunityBoard.Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace CommunityBoard.BackEnd.Controllers.V1
+namespace CommunityBoard.BackEnd.Controllers.V1.CommunicationControllers
 {
     public class IdentityController : Controller
     {

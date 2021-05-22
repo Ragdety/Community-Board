@@ -1,6 +1,7 @@
 ﻿using CommunityBoard.Core.DomainObjects;
 using CommunityBoard.Core.DTOs;
 using System.Threading.Tasks;
+using CommunityBoard.Core.Models.CoreModels;
 
 namespace CommunityBoard.Core.Interfaces.Repositories
 {
@@ -11,5 +12,6 @@ namespace CommunityBoard.Core.Interfaces.Repositories
         Task<AuthenticationResult> LoginAsync(string emailOrUserName, string password);
         Task<AuthenticationResult> RefreshTokenAsync(string token, string refreshToken);
         Task<UserDto> FindUserById(int userId);
+        Task<User> FindUserByUsername(string username);
     }
 }
