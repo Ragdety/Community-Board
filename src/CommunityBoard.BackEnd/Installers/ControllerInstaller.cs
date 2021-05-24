@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace CommunityBoard.BackEnd.Installers
@@ -16,7 +17,12 @@ namespace CommunityBoard.BackEnd.Installers
             IConfiguration configuration,
             IWebHostEnvironment environment)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(o =>
+                {
+                    //To display the enum name and not number
+                    o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });;
         }
     }
 }

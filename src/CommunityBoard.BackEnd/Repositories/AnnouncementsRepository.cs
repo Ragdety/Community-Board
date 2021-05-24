@@ -18,6 +18,13 @@ namespace CommunityBoard.BackEnd.Repositories
             _announcements = db.Set<Announcement>();
         }
 
+        public override async Task<IList<Announcement>> FindAllAsync()
+        {
+            return await  _announcements
+                .OrderByDescending(x => x.CreatedAt)
+                .ToListAsync();
+        }
+
         public async Task<IList<Announcement>> FindAllUserAnnouncements(int userId)
         {
             return await _announcements
