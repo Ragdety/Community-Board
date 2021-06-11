@@ -55,7 +55,6 @@ namespace CommunityBoard.FrontEnd.Pages.PostManagement
         public async Task<IActionResult> OnPostAsync()
         {
             OldAnnouncement = await _apiAnnouncementClient.GetAnnouncementByIdAsync(CurrentAnnouncementId);
-            var token = Request.Cookies["JWToken"];
 
             var updateAnnouncementDto = new UpdateAnnouncementDto
             {
@@ -81,7 +80,7 @@ namespace CommunityBoard.FrontEnd.Pages.PostManagement
             }
 
             var success = await _apiAnnouncementClient.UpdateAnnouncementAsync(
-                OldAnnouncement.Id, updateAnnouncementDto, token);
+                OldAnnouncement.Id, updateAnnouncementDto);
 
             if (!success)
             {

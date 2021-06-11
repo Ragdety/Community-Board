@@ -55,9 +55,7 @@ namespace CommunityBoard.FrontEnd.Pages.PostManagement
                 ms.Dispose();
             }
 
-            var token = Request.Cookies["JWToken"];
-
-            var success = await _announcementClient.CreateAnnouncementAsync(createdAnnouncement, token);
+            var success = await _announcementClient.CreateAnnouncementAsync(createdAnnouncement);
             if(!success)
             {
                 ModelState.AddModelError("UnknownError", "Something went wrong creating the announcement...");

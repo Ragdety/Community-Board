@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using CommunityBoard.FrontEnd.Extensions;
 
 namespace CommunityBoard.FrontEnd.Installers
 {
@@ -15,19 +16,26 @@ namespace CommunityBoard.FrontEnd.Installers
             IConfiguration configuration,
             IWebHostEnvironment environment)
         {
+            var serviceUrl = configuration["serviceUrl"];
+            
             services.AddHttpClient<IReportClient, ReportClient>(client =>
             {
-                client.BaseAddress = new Uri(configuration["serviceUrl"]);
+                client.BaseAddress = new Uri(serviceUrl);
             });
 
             services.AddHttpClient<IAnnouncementClient, AnnouncementClient>(client =>
             {
-                client.BaseAddress = new Uri(configuration["serviceUrl"]);
+                client.BaseAddress = new Uri(serviceUrl);
             });
 
             services.AddHttpClient<IIdentityClient, IdentityClient>(client =>
             {
-                client.BaseAddress = new Uri(configuration["serviceUrl"]);
+                client.BaseAddress = new Uri(serviceUrl);
+            });
+            
+            services.AddHttpClient<IChatClient, ChatClient>(client =>
+            {
+                client.BaseAddress = new Uri(serviceUrl);
             });
         }
     }

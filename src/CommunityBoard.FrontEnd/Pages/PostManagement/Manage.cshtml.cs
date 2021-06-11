@@ -31,7 +31,7 @@ namespace CommunityBoard.FrontEnd.Pages.PostManagement
                 //For now add it from cookie
                 //If time allows it, will add security to prevent attacks
                 UserAnnouncements =
-                   await _apiAnnouncementClient.GetUserAnnouncementsAsync(int.Parse(id), token);
+                   await _apiAnnouncementClient.GetUserAnnouncementsAsync();
             }
         }
 
@@ -41,7 +41,7 @@ namespace CommunityBoard.FrontEnd.Pages.PostManagement
             if (User.Identity.IsAuthenticated)
             {
                 var token = Request.Cookies["JWToken"];
-                await _apiAnnouncementClient.DeleteAnnouncementAsync(announcementId, token);
+                await _apiAnnouncementClient.DeleteAnnouncementAsync(announcementId);
                 return RedirectToPage("/PostManagement/Manage");
             }
             return RedirectToPage("/Index");

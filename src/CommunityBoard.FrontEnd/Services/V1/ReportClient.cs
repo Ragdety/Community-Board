@@ -6,16 +6,22 @@ using CommunityBoard.FrontEnd.Extensions;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace CommunityBoard.FrontEnd.Services.V1
 {
 	public class ReportClient : IReportClient
 	{
 		private readonly HttpClient _httpClient;
+		private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public ReportClient(HttpClient httpClient)
+		public ReportClient(
+			HttpClient httpClient,
+			IHttpContextAccessor httpContextAccessor)
 		{
 			_httpClient = httpClient;
+			_httpContextAccessor = httpContextAccessor;
+			_httpClient.AddTokenToHeader(_httpContextAccessor.HttpContext.Request.Cookies["JWToken"]);
 		}
 
 		public async Task<bool> CreateReportAsync(int announcementId, CreateReportDto report)
@@ -27,20 +33,16 @@ namespace CommunityBoard.FrontEnd.Services.V1
 			return response.IsSuccessStatusCode;
 		}
 
-		public async Task<bool> DeleteReportAsync(int id, string token)
+		public async Task<bool> DeleteReportAsync(int id)
 		{
-			_httpClient.AddTokenToHeader(token);
-
 			var response = await _httpClient.DeleteAsync(
 				ApiRoutes.Reports.Delete.Replace("{reportId}", id.ToString()));
 
 			return response.IsSuccessStatusCode;
 		}
 
-		public async Task<List<Report>> GetAnnouncementReportsAsync(int announcementId, string token)
+		public async Task<List<Report>> GetAnnouncementReportsAsync(int announcementId)
 		{
-			_httpClient.AddTokenToHeader(token);
-
 			var response = await _httpClient.GetAsync(
 				ApiRoutes.Reports.GetAllFromAnnouncement.Replace(
 					"{announcementId}", announcementId.ToString()));
@@ -51,10 +53,8 @@ namespace CommunityBoard.FrontEnd.Services.V1
 			return await response.Content.ReadAsAsync<List<Report>>();
 		}
 
-		public async Task<Report> GetReportByIdAsync(int id, string token)
+		public async Task<Report> GetReportByIdAsync(int id)
 		{
-			_httpClient.AddTokenToHeader(token);
-
 			var response = await _httpClient.GetAsync(
 				ApiRoutes.Reports.Get.Replace(
 					"{reportId}", id.ToString()));
@@ -65,10 +65,8 @@ namespace CommunityBoard.FrontEnd.Services.V1
 			return await response.Content.ReadAsAsync<Report>();
 		}
 
-		public async Task<List<Report>> GetReportsAsync(string token)
+		public async Task<List<Report>> GetReportsAsync()
 		{
-			_httpClient.AddTokenToHeader(token);
-
 			var response = await _httpClient.GetAsync(ApiRoutes.Reports.GetAll);
 			if(!response.IsSuccessStatusCode)
 				return null;

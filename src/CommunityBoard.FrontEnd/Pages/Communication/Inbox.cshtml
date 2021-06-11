@@ -223,7 +223,10 @@
 
     <script>
         const connection = new signalR.HubConnectionBuilder()
-            .withUrl("/chatHub")
+            .withUrl('@Model.ChatUrl', {
+                skipNegotiation: true,
+                transport: signalR.HttpTransportType.WebSockets
+            })
             .build();
         
         connection.on("ReceiveMessage", (data) => {
@@ -235,9 +238,9 @@
                 console.log("Connection started!");
             })
             .catch(err => {
-                console.log(err);
+                console.error(err);
             });
-            
+        
         
         // const joinRoom = () => {
         //     axios.post()

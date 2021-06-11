@@ -7,10 +7,10 @@ namespace CommunityBoard.Core.Interfaces.Clients
 {
 	public interface IReportClient
 	{
-        Task<List<Report>> GetReportsAsync(string token);
-        Task<Report> GetReportByIdAsync(int id, string token);
-        Task<List<Report>> GetAnnouncementReportsAsync(int announcementId, string token);
+        Task<List<Report>> GetReportsAsync();
+        Task<Report> GetReportByIdAsync(int id);
+        Task<List<Report>> GetAnnouncementReportsAsync(int announcementId);
         Task<bool> CreateReportAsync(int announcementId, CreateReportDto report);
-        Task<bool> DeleteReportAsync(int id, string token);
+        Task<bool> DeleteReportAsync(int id);
     }
 }
