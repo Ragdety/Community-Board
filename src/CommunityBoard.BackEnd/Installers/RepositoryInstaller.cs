@@ -19,6 +19,7 @@ namespace CommunityBoard.BackEnd.Installers
             services.AddScoped<IAnnouncementsRepository, AnnouncementsRepository>();
             services.AddScoped<IReportsRepository, ReportsRepository>();
             services.AddScoped<IChatsRepository, ChatsRepository>();
+            services.AddScoped<IMessagesRepository, MessagesRepository>();
         }
     }
 }

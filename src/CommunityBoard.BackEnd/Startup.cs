@@ -66,7 +66,7 @@ namespace CommunityBoard.BackEnd
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<ChatHub>("/Inbox/{UserName}");
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
     }

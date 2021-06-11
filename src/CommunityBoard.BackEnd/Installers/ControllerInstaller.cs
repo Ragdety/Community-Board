@@ -2,11 +2,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace CommunityBoard.BackEnd.Installers
 {
@@ -22,7 +19,11 @@ namespace CommunityBoard.BackEnd.Installers
                 {
                     //To display the enum name and not number
                     o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                });;
+                })
+                .AddNewtonsoftJson(x =>
+                {
+                    x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
         }
     }
 }

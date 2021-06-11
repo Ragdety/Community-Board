@@ -220,8 +220,27 @@
 
 @section Scripts {
     <script src="~/lib/signalr/signalr.min.js"></script>
-    
+
     <script>
-    
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+        
+        connection.on("ReceiveMessage", (data) => {
+            console.log(data);
+        });
+        
+        connection.start()
+            .then(res => {
+                console.log("Connection started!");
+            })
+            .catch(err => {
+                console.log(err);
+            });
+            
+        
+        // const joinRoom = () => {
+        //     axios.post()
+        // }
     </script>
 }

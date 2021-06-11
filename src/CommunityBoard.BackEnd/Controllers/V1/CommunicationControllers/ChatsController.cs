@@ -4,6 +4,7 @@ using CommunityBoard.BackEnd.Contracts.V1;
 using CommunityBoard.BackEnd.Extensions;
 using CommunityBoard.BackEnd.Utilities;
 using CommunityBoard.Core.Interfaces.Repositories;
+using CommunityBoard.Core.Models.CommunicationModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,45 +20,40 @@ namespace CommunityBoard.BackEnd.Controllers.V1.CommunicationControllers
         {
             _chatsRepository = chatsRepository;
         }
+
+        [HttpGet(ApiRoutes.Chats.GetChat)]
+        public async Task<IActionResult> Get(int chatId)
+        {
+            var chat = await _chatsRepository.FindByIdAsync(chatId);
+            
+            //Check if user in http context is in the chat
+            if (!_chatsRepository.IsUserInChat(chat, HttpContext.GetUserId()))
+                return Unauthorized(new { Message = "You do not own this chat" });
+            
+            return Ok(chat);
+        }
         
         [HttpPost(ApiRoutes.Chats.CreateUserChat)]
         public async Task<IActionResult> CreateUserChat([FromRoute] int userId)
         {
             try
             {
+                var chat = new Chat();
                 var rootUserId = HttpContext.GetUserId();
-                await _chatsRepository.CreateUserChat(rootUserId, userId);
+                await _chatsRepository.CreateUserChat(chat, rootUserId, userId);
                 
                 var baseUrl = HttpContext.GetBaseURL();
-                var locationUri = baseUrl + ApiRoutes.Chats.GetUserChat.Replace("{userId}", userId.ToString());
-                //var chatResponse = new UserChatResponse() { UserId = userId};
+                var locationUri = baseUrl + ApiRoutes.Chats.GetChat.Replace("{chatId}", chat.Id.ToString());
                 return Created(locationUri, new
                 {
                     Created = true,
                     Message = "Chat successfully created.",
-                    UserId = userId
+                    ChatId = chat.Id
                 });
             }
             catch (ArgumentNullException)
             {
                 return Unauthorized();
-            }
-        }
-        
-        [HttpGet(ApiRoutes.Chats.GetUserChat)]
-        public async Task<IActionResult> GetUserChat([FromRoute] int userId)
-        {
-            try
-            {
-                var rootUserId = HttpContext.GetUserId();
-                var chat = await _chatsRepository.GetUserChat(rootUserId, userId);
-                if (chat is null)
-                    return NotFound(new {Message = "You do not have a chat with this user."});
-                return Ok(chat);
-            }
-            catch (ArgumentNullException)
-            {
-                return Unauthorized(new { ErrorMessage = "You must be logged in to access chat." });
             }
         }
         

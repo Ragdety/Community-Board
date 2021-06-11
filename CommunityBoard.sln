@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityBoard.IntegrationT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityBoard.UnitTests", "test\CommunityBoard.UnitTests\CommunityBoard.UnitTests.csproj", "{FECBD252-F572-4C08-8A3F-EEE8B82BED9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunityBoard.Client", "src\CommunityBoard.Client\CommunityBoard.Client.csproj", "{E7632624-94CD-4022-94B9-61122F216FF2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,10 +43,6 @@ Global
 		{FECBD252-F572-4C08-8A3F-EEE8B82BED9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FECBD252-F572-4C08-8A3F-EEE8B82BED9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FECBD252-F572-4C08-8A3F-EEE8B82BED9E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E7632624-94CD-4022-94B9-61122F216FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E7632624-94CD-4022-94B9-61122F216FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E7632624-94CD-4022-94B9-61122F216FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E7632624-94CD-4022-94B9-61122F216FF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,7 +53,6 @@ Global
 		{73DC7B09-99C9-4B9B-8C43-1EEB122FDE48} = {C635D4CD-CCAA-4C49-BE4F-1F8456E0A702}
 		{8F83FDBB-C05C-4024-9B7D-4485A312AD17} = {259FDC88-4632-4594-9050-6AA6B4C0F659}
 		{FECBD252-F572-4C08-8A3F-EEE8B82BED9E} = {259FDC88-4632-4594-9050-6AA6B4C0F659}
-		{E7632624-94CD-4022-94B9-61122F216FF2} = {C635D4CD-CCAA-4C49-BE4F-1F8456E0A702}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2BE0A97E-E93F-44B3-80DA-D2283701AD2B}
