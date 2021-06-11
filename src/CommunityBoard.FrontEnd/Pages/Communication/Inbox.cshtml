@@ -12,79 +12,32 @@
 <div class="col-sm-3 col-xs-12">
     <div class="col-inside-lg decor-default chat" style="overflow: auto; outline: none;" tabindex="5000">
         <div class="chat-users">
-            <h6>Conversations</h6>
-            <div class="user">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User name">
-                    <div class="status off"></div>
-                </div>
-                <div class="name">User name</div>
-                <div class="mood">User mood</div>
-            </div>
-            <div class="user">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="User name">
-                    <div class="status online"></div>
-                </div>
-                <div class="name">User name</div>
-                <div class="mood">User mood</div>
-            </div>
-            <div class="user">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="User name">
-                    <div class="status busy"></div>
-                </div>
-                <div class="name">User name</div>
-                <div class="mood">User mood</div>
-            </div>
-            <div class="user">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="User name">
-                    <div class="status offline"></div>
-                </div>
-                <div class="name">User name</div>
-                <div class="mood">User mood</div>
-            </div>
-            <div class="user">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="User name">
-                    <div class="status off"></div>
-                </div>
-                <div class="name">User name</div>
-                <div class="mood">User mood</div>
-            </div>
-            <div class="user">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="User name">
-                    <div class="status online"></div>
-                </div>
-                <div class="name">User name</div>
-                <div class="mood">User mood</div>
-            </div>
-            <div class="user">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User name">
-                    <div class="status off"></div>
-                </div>
-                <div class="name">User name</div>
-                <div class="mood">User mood</div>
-            </div>
-            <div class="user">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="User name">
-                    <div class="status online"></div>
-                </div>
-                <div class="name">User name</div>
-                <div class="mood">User mood</div>
-            </div>
-            <div class="user">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="User name">
-                    <div class="status busy"></div>
-                </div>
-                <div class="name">User name</div>
-                <div class="mood">User mood</div>
-            </div>
+            <h6>Chats</h6>
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            @if (Model.Chats != null)
+            {
+                @if (Model.Chats.Count <= 0)
+                {
+                    <p class="text-danger">You do not have any chats.</p>
+                }
+                else
+                {
+                    @foreach (var chat in Model.Chats)
+                    {
+                        <div class="user">
+                            <div class="avatar">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User name">
+                                <div class="status off"></div>
+                            </div>
+                            <div class="name">
+                                @*User Id where id is not equal to user logged in*@
+                                @chat.Users.FirstOrDefault(x =>
+                                    x.UserId != int.Parse(User.FindFirst("id").Value))?.UserId
+                            </div>
+                        </div>
+                    }
+                }
+            }
         </div>
     </div>
 </div>

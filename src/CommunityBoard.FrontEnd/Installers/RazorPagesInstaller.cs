@@ -18,6 +18,7 @@ namespace CommunityBoard.FrontEnd.Installers
                 options.Conventions.AuthorizePage("/PostManagement/Update");
                 options.Conventions.AuthorizePage("/PostManagement/Manage");
                 options.Conventions.AuthorizePage("/Contact");
+                options.Conventions.AuthorizePage("/Communication/Inbox");
             }).AddRazorRuntimeCompilation();
         }
     }

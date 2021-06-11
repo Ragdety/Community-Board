@@ -22,6 +22,10 @@ namespace CommunityBoard.BackEnd.Repositories.CommunicationRepos
         public override async Task<Chat> FindByIdAsync(object id)
         {
             var chat = await base.FindByIdAsync(id);
+
+            if (chat == null)
+                return null;
+            
             await _db.Entry(chat).Collection(c => c.Users).LoadAsync();
             await _db.Entry(chat).Collection(c => c.Messages).LoadAsync();
             return chat;
@@ -45,6 +49,7 @@ namespace CommunityBoard.BackEnd.Repositories.CommunicationRepos
 
         public async Task<bool> CreateUserChat(Chat chat, int rootUserId, int targetUserId)
         {
+            //Add validation if chat is already created...
             if (!await CreateAsync(chat))
                 return false;
 
@@ -56,15 +61,12 @@ namespace CommunityBoard.BackEnd.Repositories.CommunicationRepos
 
         public async Task<IEnumerable<Chat>> GetAllUserChats(int userId)
         {
-            var user = 
-                await _chatUsers.FirstOrDefaultAsync(x => x.UserId == userId);
-
-            if (user is null)
-                return null;
+            //Might refactor this later
             return await _chats
                 .Include(x => x.Users)
-                //.Include(y => y.Messages)
-                .Where(x => x.Users.Contains(user))
+                .Where(x => 
+                    x.Users.FirstOrDefault(y => 
+                        y.UserId == userId).UserId == userId)
                 .ToListAsync();
         }
 

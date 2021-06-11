@@ -25,6 +25,9 @@ namespace CommunityBoard.BackEnd.Controllers.V1.CommunicationControllers
         public async Task<IActionResult> Get(int chatId)
         {
             var chat = await _chatsRepository.FindByIdAsync(chatId);
+
+            if (chat is null)
+                return NotFound(new { Message = "Chat does not exist." });
             
             //Check if user in http context is in the chat
             if (!_chatsRepository.IsUserInChat(chat, HttpContext.GetUserId()))
@@ -38,6 +41,7 @@ namespace CommunityBoard.BackEnd.Controllers.V1.CommunicationControllers
         {
             try
             {
+                //TODO: Add validation to make sure chat is not created twice
                 var chat = new Chat();
                 var rootUserId = HttpContext.GetUserId();
                 await _chatsRepository.CreateUserChat(chat, rootUserId, userId);
