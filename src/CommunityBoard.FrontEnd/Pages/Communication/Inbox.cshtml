@@ -22,6 +22,7 @@
                 }
                 else
                 {
+                    var index = 0;
                     @foreach (var chat in Model.Chats)
                     {
                         <div class="user">
@@ -30,11 +31,10 @@
                                 <div class="status off"></div>
                             </div>
                             <div class="name">
-                                @*User Id where id is not equal to user logged in*@
-                                @chat.Users.FirstOrDefault(x =>
-                                    x.UserId != int.Parse(User.FindFirst("id").Value))?.UserId
+                                @Model.ChatUsers[index].UserName
                             </div>
                         </div>
+                        index++;
                     }
                 }
             }

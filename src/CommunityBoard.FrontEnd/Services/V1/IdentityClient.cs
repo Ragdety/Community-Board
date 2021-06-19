@@ -19,7 +19,7 @@ namespace CommunityBoard.FrontEnd.Services.V1
             _httpClient = httpClient;
         }
 
-		public async Task<UserDto> GetUserById(int userId)
+		public async Task<UserDto> GetUserByIdAsync(int userId)
 		{
             var response = await _httpClient.GetAsync(
                 ApiRoutes.Identity.GetUser.Replace("{userId}", userId.ToString()));

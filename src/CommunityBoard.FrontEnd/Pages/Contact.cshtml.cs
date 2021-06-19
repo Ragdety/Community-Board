@@ -48,7 +48,7 @@ namespace CommunityBoard.FrontEnd.Pages
             Announcement = 
                 await _apiAnnouncementClient.GetAnnouncementByIdAsync(announcementId);
 
-            AnnouncementUser = await _identityClient.GetUserById(Announcement.UserId);
+            AnnouncementUser = await _identityClient.GetUserByIdAsync(Announcement.UserId);
 
             if (Announcement == null)
                 return RedirectToPage("/Errors/NotFound");
@@ -65,7 +65,7 @@ namespace CommunityBoard.FrontEnd.Pages
                 await _apiAnnouncementClient.GetAnnouncementByIdAsync(AnnouncementId);
 
             AnnouncementUser =
-                await _identityClient.GetUserById(Announcement.UserId);
+                await _identityClient.GetUserByIdAsync(Announcement.UserId);
 
 			//Might add a template
 			var emailResponse = await _emailSender

@@ -39,7 +39,10 @@ namespace CommunityBoard.FrontEnd.Services.V1
 
         public async Task<Chat> GetUserChat(int chatId)
         {
-            throw new System.NotImplementedException();
+            var response = await _httpClient.GetAsync(ApiRoutes.Chats.GetChat.Replace("{chatId}", chatId.ToString()));
+            if(!response.IsSuccessStatusCode)
+                return null;
+            return await response.Content.ReadAsAsync<Chat>();
         }
 
         public async Task<bool> CreateUserChat(int userId)

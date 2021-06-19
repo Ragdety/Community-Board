@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using CommunityBoard.BackEnd.Contracts.V1;
 using CommunityBoard.BackEnd.Hubs;
@@ -11,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
-namespace CommunityBoard.BackEnd.Controllers.V1.CommunicationControllers
+namespace CommunityBoard.BackEnd.Controllers.V1
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class MessagesController : Controller
