@@ -7,30 +7,19 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace CommunityBoard.FrontEnd.Services.V1
 {
-    public class IdentityClient : IIdentityClient
+    public class IdentityClient : BaseClient, IIdentityClient
     {
-        private readonly HttpClient _httpClient;
-
-        public IdentityClient(HttpClient httpClient)
+        public IdentityClient(
+            HttpClient httpClient, 
+            IHttpContextAccessor httpContextAccessor) : base(httpClient, httpContextAccessor)
         {
-            _httpClient = httpClient;
         }
 
-		public async Task<UserDto> GetUserByIdAsync(int userId)
-		{
-            var response = await _httpClient.GetAsync(
-                ApiRoutes.Identity.GetUser.Replace("{userId}", userId.ToString()));
-
-            if (response.StatusCode == HttpStatusCode.NotFound)
-                return null;
-
-            return await response.Content.ReadAsAsync<UserDto>();
-		}
-
-		public async Task<AuthenticationResult> Login(UserLoginDto user)
+        public async Task<AuthenticationResult> Login(UserLoginDto user)
         {
             var loginResponse = await _httpClient.PostAsJsonAsync(ApiRoutes.Identity.Login, user);
 

@@ -13,11 +13,10 @@ namespace CommunityBoard.BackEnd.Utilities
         {
             if(httpContext.User == null)
             {
-                throw new ArgumentNullException("No user id");
+                throw new ArgumentNullException(nameof(httpContext.User));
             }
 
-            return 
-                int.Parse(httpContext.User.Claims.Single(u => u.Type == "id").Value);
+            return int.Parse(httpContext.User.Claims.Single(u => u.Type == "id").Value);
         }
 
         public static bool IsValidEmail(string email)

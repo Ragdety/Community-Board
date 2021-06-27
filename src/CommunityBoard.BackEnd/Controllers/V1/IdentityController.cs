@@ -1,15 +1,15 @@
-﻿using CommunityBoard.BackEnd.Contracts.V1;
+﻿using System.Threading.Tasks;
+using CommunityBoard.BackEnd.Contracts.V1;
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.DTOs.Responses;
 using CommunityBoard.Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
-namespace CommunityBoard.BackEnd.Controllers.V1.CommunicationControllers
+namespace CommunityBoard.BackEnd.Controllers.V1
 {
     public class IdentityController : Controller
     {
-        public readonly IIdentityRepository _identityRepository;
+        private readonly IIdentityRepository _identityRepository;
 
         public IdentityController(IIdentityRepository identityRepository)
         {
@@ -60,17 +60,6 @@ namespace CommunityBoard.BackEnd.Controllers.V1.CommunicationControllers
                 RefreshToken = authResponse.RefreshToken
             });
         }
-
-        [HttpGet(ApiRoutes.Identity.GetUser)]
-        public async Task<IActionResult> GetUser([FromRoute] int userId)
-		{
-            var user = await _identityRepository.FindUserById(userId);
-
-            if (user == null)
-                return NotFound(new { Message = "User was not found." });
-
-            return Ok(user);
-		}
 
         [HttpPost(ApiRoutes.Identity.Refresh)]
         public async Task<IActionResult> Refresh([FromBody] RefreshTokenDto refreshTokenDto)

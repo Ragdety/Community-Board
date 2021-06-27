@@ -1,4 +1,6 @@
-﻿using CommunityBoard.BackEnd.Contracts.V1;
+﻿using System;
+using System.Threading.Tasks;
+using CommunityBoard.BackEnd.Contracts.V1;
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.DTOs.Responses;
 using CommunityBoard.Core.Interfaces.Repositories;
@@ -6,10 +8,8 @@ using CommunityBoard.Core.Models.CoreModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 
-namespace CommunityBoard.BackEnd.Controllers.V1.CommunicationControllers
+namespace CommunityBoard.BackEnd.Controllers.V1
 {
 	[Authorize(AuthenticationSchemes = 
         JwtBearerDefaults.AuthenticationScheme,

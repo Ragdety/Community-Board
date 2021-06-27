@@ -8,7 +8,6 @@ namespace CommunityBoard.Core.Interfaces.Clients
     {
         Task<AuthenticationResult> Register(UserRegistrationDto user);
         Task<AuthenticationResult> Login(UserLoginDto user);
-        Task<UserDto> GetUserByIdAsync(int userId);
         Task<AuthenticationResult> RefreshToken(RefreshTokenDto refreshTokenDto);
     }
 }

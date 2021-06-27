@@ -12,21 +12,16 @@ using System.Threading.Tasks;
 
 namespace CommunityBoard.FrontEnd.Services.V1
 {
-	public class AnnouncementClient : IAnnouncementClient
+	public class AnnouncementClient : BaseClient, IAnnouncementClient
     {
-        private readonly HttpClient _httpClient;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
         public AnnouncementClient(
-            HttpClient httpClient,
-            IHttpContextAccessor httpContextAccessor)
+            HttpClient client, 
+            IHttpContextAccessor httpContextAccessor) : base(client, httpContextAccessor)
         {
-            _httpClient = httpClient;
-            _httpContextAccessor = httpContextAccessor;
-            
             //For now, add it to header to be able to see current logged in announcements
             _httpClient.AddTokenToHeader(_httpContextAccessor.HttpContext.Request.Cookies["JWToken"]);
         }
+        
         public async Task<List<Announcement>> GetAnnouncementsAsync()
         {
             var response = await _httpClient.GetAsync(ApiRoutes.Announcements.GetAll);

@@ -34,13 +34,19 @@
         }
 
         //For simplicity purposes, we include the identity as a part of this API
-        //This could (or should...) be in a different server
+        //This could (or should?) be in a different server
         public static class Identity
         {
             public const string Login = Base + "/identity/login";
             public const string Register = Base + "/identity/register";
-            public const string GetUser = Base + "/identity/users/{userId}";
             public const string Refresh = Base + "/identity/refresh";
+        }
+        
+        public static class Users
+        {
+            public const string GetUserById = Base + "/users/{userId}";
+            public const string Me = Base + "/users/me";
+            public const string UpdateAvatar = Base + "/users/me/avatar";
         }
         
         public static class Chats

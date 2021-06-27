@@ -17,18 +17,18 @@ namespace CommunityBoard.FrontEnd.Pages.Communication
     {
         private readonly IConfiguration _configuration;
         private readonly IChatClient _chatClient;
-        private readonly IIdentityClient _identityClient;
+        private readonly IUserClient _userClient;
         private readonly ILogger<InboxModel> _logger;
 
         public InboxModel(
             IConfiguration configuration,
             IChatClient chatClient,
-            IIdentityClient identityClient,
+            IUserClient userClient,
             ILogger<InboxModel> logger)
         {
             _configuration = configuration;
             _chatClient = chatClient;
-            _identityClient = identityClient;
+            _userClient = userClient;
             _logger = logger;
             ChatUrl = _configuration["serviceUrl"] + _configuration["chatHub"];
         }
@@ -53,7 +53,7 @@ namespace CommunityBoard.FrontEnd.Pages.Communication
                         x.UserId != int.Parse(User.FindFirst("id").Value));
 
                     if (user == null) continue;
-                    ChatUsers.Add(await _identityClient.GetUserByIdAsync(user.UserId));
+                    ChatUsers.Add(await _userClient.GetUserByIdAsync(user.UserId));
                 }
                 return Page();
             }

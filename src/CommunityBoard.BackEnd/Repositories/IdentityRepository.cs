@@ -119,21 +119,6 @@ namespace CommunityBoard.BackEnd.Repositories
             return await GenerateAuthResultAsync(newUser);
         }
 
-        public async Task<UserDto> FindUserById(int userId)
-        {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
-
-            if (user == null)
-                return null;
-
-            return MapUser(user);
-        }
-        
-        public async Task<User> FindUserByUsername(string username)
-        {
-            return await _userManager.FindByNameAsync(username);
-        }
-
         public async Task<AuthenticationResult> RefreshTokenAsync(string token, string refreshToken)
         {
             var validationToken = GetPrincipalFromToken(token);
@@ -219,19 +204,6 @@ namespace CommunityBoard.BackEnd.Repositories
                     validationToken.Claims.Single(x => x.Type == "id").Value);
 
             return await GenerateAuthResultAsync(user);
-        }
-
-        private UserDto MapUser(User user)
-        {
-            var userDto = new UserDto
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                UserName = user.UserName,
-                Email = user.Email
-            };
-
-            return userDto;
         }
 
         private async Task<IEnumerable<string>> GetUserRoles(User user)

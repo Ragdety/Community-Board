@@ -15,7 +15,7 @@ namespace CommunityBoard.FrontEnd.Pages
 	public class ContactModel : PageModel
     {
         private readonly IAnnouncementClient _apiAnnouncementClient;
-        private readonly IIdentityClient _identityClient;
+        private readonly IUserClient _userClient;
         private readonly IFluentEmail _emailSender;
 
         [BindProperty]
@@ -34,11 +34,11 @@ namespace CommunityBoard.FrontEnd.Pages
 
 		public ContactModel(
             IAnnouncementClient apiAnnouncementClient, 
-            IIdentityClient identityClient,
+            IUserClient userClient,
             IFluentEmail emailSender)
 		{
 			_apiAnnouncementClient = apiAnnouncementClient;
-			_identityClient = identityClient;
+			_userClient = userClient;
             _emailSender = emailSender;
         }
 
@@ -48,7 +48,7 @@ namespace CommunityBoard.FrontEnd.Pages
             Announcement = 
                 await _apiAnnouncementClient.GetAnnouncementByIdAsync(announcementId);
 
-            AnnouncementUser = await _identityClient.GetUserByIdAsync(Announcement.UserId);
+            AnnouncementUser = await _userClient.GetUserByIdAsync(Announcement.UserId);
 
             if (Announcement == null)
                 return RedirectToPage("/Errors/NotFound");
@@ -65,7 +65,7 @@ namespace CommunityBoard.FrontEnd.Pages
                 await _apiAnnouncementClient.GetAnnouncementByIdAsync(AnnouncementId);
 
             AnnouncementUser =
-                await _identityClient.GetUserByIdAsync(Announcement.UserId);
+                await _userClient.GetUserByIdAsync(Announcement.UserId);
 
 			//Might add a template
 			var emailResponse = await _emailSender

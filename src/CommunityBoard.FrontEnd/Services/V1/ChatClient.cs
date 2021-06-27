@@ -11,17 +11,12 @@ using Microsoft.AspNetCore.Http;
 
 namespace CommunityBoard.FrontEnd.Services.V1
 {
-    public class ChatClient : IChatClient
+    public class ChatClient : BaseClient, IChatClient
     {
-        private readonly HttpClient _httpClient;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
         public ChatClient(
-            HttpClient httpClient,
-            IHttpContextAccessor httpContextAccessor)
+            HttpClient httpClient, 
+            IHttpContextAccessor httpContextAccessor) : base(httpClient, httpContextAccessor)
         {
-            _httpClient = httpClient;
-            _httpContextAccessor = httpContextAccessor;
             _httpClient.AddTokenToHeader(_httpContextAccessor.HttpContext.Request.Cookies["JWToken"]);
         }
         

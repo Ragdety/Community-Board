@@ -10,20 +10,15 @@ using Microsoft.AspNetCore.Http;
 
 namespace CommunityBoard.FrontEnd.Services.V1
 {
-	public class ReportClient : IReportClient
+	public class ReportClient : BaseClient, IReportClient
 	{
-		private readonly HttpClient _httpClient;
-		private readonly IHttpContextAccessor _httpContextAccessor;
-
 		public ReportClient(
-			HttpClient httpClient,
-			IHttpContextAccessor httpContextAccessor)
+			HttpClient httpClient, 
+			IHttpContextAccessor httpContextAccessor) : base(httpClient, httpContextAccessor)
 		{
-			_httpClient = httpClient;
-			_httpContextAccessor = httpContextAccessor;
 			_httpClient.AddTokenToHeader(_httpContextAccessor.HttpContext.Request.Cookies["JWToken"]);
 		}
-
+		
 		public async Task<bool> CreateReportAsync(int announcementId, CreateReportDto report)
 		{
 			var response = await _httpClient.PostAsJsonAsync(
