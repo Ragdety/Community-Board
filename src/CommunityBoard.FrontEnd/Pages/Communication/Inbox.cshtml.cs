@@ -42,7 +42,7 @@ namespace CommunityBoard.FrontEnd.Pages.Communication
         {
             try
             {
-                Chats = await _chatClient.GetUserChats();
+                Chats = await _chatClient.GetUserChatsAsync();
                 if (Chats == null)
                     return RedirectToPage("/Index");
                 

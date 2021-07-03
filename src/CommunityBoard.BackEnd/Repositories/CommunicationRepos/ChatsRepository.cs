@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityBoard.BackEnd.Data;
@@ -59,7 +60,7 @@ namespace CommunityBoard.BackEnd.Repositories.CommunicationRepos
             return await JoinChat(chat.Id, targetUserId);
         }
 
-        public async Task<IEnumerable<Chat>> GetAllUserChats(int userId)
+        public async Task<IEnumerable<Chat>> FindAllUserChatsAsync(int userId)
         {
             //Might refactor this later
             return await _chats
@@ -70,7 +71,7 @@ namespace CommunityBoard.BackEnd.Repositories.CommunicationRepos
                 .ToListAsync();
         }
 
-        public async Task<bool> DeleteUserChat(int chatId, int userId)
+        public async Task<bool> DeleteUserChat(int chatId)
         {
             throw new System.NotImplementedException();
         }
@@ -78,6 +79,14 @@ namespace CommunityBoard.BackEnd.Repositories.CommunicationRepos
         public bool IsUserInChat(Chat chat, int userId)
         {
             return chat.Users.FirstOrDefault(x => x.UserId == userId) != null;
+        }
+
+        public async Task<Tuple<bool, Chat>> UsersHaveChat(int rootUserId, int userId)
+        {
+            var rootUserChats = await FindAllUserChatsAsync(rootUserId);
+            var userChats = await FindAllUserChatsAsync(userId);
+            var intersection = rootUserChats.Intersect(userChats).ToList();
+            return new Tuple<bool, Chat>(intersection.Any(), intersection.FirstOrDefault());
         }
     }
 }

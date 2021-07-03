@@ -4,6 +4,8 @@
     ViewData["Title"] = "Home page";
 }
 
+@using System.Security.Claims; 
+
 <link rel="stylesheet" href="~/css/custom.css" />
 
 <div class="text-center">
@@ -15,8 +17,8 @@
 		<form method="GET" class="text-center pb-4">
 			<div class="input-group">
 				<input type="text" asp-for="SearchTerm" 
-					   class="form-control"
-					   placeholder="Start Searching!"/>
+				       class="form-control"
+				       placeholder="Start Searching!"/>
 				<div class="input-group-append">
 					<button type="submit" class="btn btn-primary">
 						Search
@@ -24,9 +26,12 @@
 				</div>
 			</div>
 		</form>
+		
+		@Html.ValidationSummary(false, "", new {@class = "text-danger"})
+		
 		@if (Model.Announcements != null)
 		{
-			if (Model.Announcements.Count() > 0)
+			if (Model.Announcements.Any())
 			{
 				<div class=" grid" style="column-count: 3">
 					@foreach (var announcement in Model.Announcements)
@@ -42,15 +47,57 @@
 									<p class="card-text">@announcement.Type</p>
 									<p class="card-text">@announcement.Description</p>
 								</div>
+								
+								@{ 
+									var user = (ClaimsIdentity)User.Identity;
+								}
+
 								<div class="card-footer">
-									<a href="@Url.Page("/Contact", new { announcementId = announcement.Id })"
-									   class="btn btn-outline-success btn-sm transition">
-										Contact
-									</a>
-									<a href="@Url.Page("/Report", new { announcementId = announcement.Id })"
-									   class="btn btn-outline-danger btn-sm float-right transition">
-										<i class="fa fa-flag"></i>
-									</a>
+									@if (user.IsAuthenticated)
+									{
+										if (!Model.IsAnnouncementMine(announcement.UserId))
+										{
+											<a @* href="@Url.Page("/Contact", new {announcementId = announcement.Id})" *@
+												class="btn btn-outline-success btn-sm transition"
+												onclick="openForm(@announcement.Id)">
+												Contact
+											</a>
+										}
+									}
+									else
+									{
+										<a class="btn btn-outline-success btn-sm transition"
+										   asp-page="Authentication/Register">
+											Contact
+										</a>
+									}
+										
+									<div class="chat-popup" id="chatPopupForm-@announcement.Id">
+										<form asp-page-handler="SendMessage" class="form-container"
+										      id="messageForm-@announcement.Id">
+											<h1>Chat @announcement.Name</h1>
+											<label for="msg"><b>Message</b></label>
+											<textarea placeholder="Type message.."
+													asp-for="Message"
+													id="msg" 
+													form="messageForm-@announcement.Id"
+													required></textarea>
+											<input type="hidden" name="userId" value="@announcement.UserId">
+											<button type="submit"
+											        class="btn btn-outline-success transition">Send</button>
+											<button type="button"
+											        class="btn cancel btn-outline-danger transition"
+											        onclick="closeForm(@announcement.Id)">Close</button>
+										</form>
+									</div>
+
+									@if (!Model.IsAnnouncementMine(announcement.UserId))
+									{
+										<a href="@Url.Page("/Report", new {announcementId = announcement.Id})"
+										   class="btn btn-outline-danger btn-sm float-right transition">
+											<i class="fa fa-flag"></i>
+										</a>
+									}
 								</div>
 							</div>
 						</div>
@@ -85,5 +132,55 @@
 			columnWidth: 160,
 			gutter: 20
 		});
+		
+		let openChatPopupId = null;
+		
+		function openForm(announcementId) {
+			if (openChatPopupId) closeForm(openChatPopupId);
+			openChatPopupId = announcementId;
+          	document.getElementById(`chatPopupForm-${announcementId}`).style.display = "block";
+        }
+        
+        function closeForm(announcementId) {
+          	document.getElementById(`chatPopupForm-${announcementId}`).style.display = "none";
+        }
 	</script>
 }
+
+<style>
+	/*Style and idea from: 
+	https://www.w3schools.com/howto/howto_js_popup_chat.asp*/
+	.chat-popup {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      right: 15px;
+      border: 3px solid #f1f1f1;
+      z-index: 9;
+    }
+    
+    
+	/* Add styles to the form container */
+	.form-container {
+	  max-width: 300px;
+	  padding: 10px;
+	  background-color: white;
+	}
+	
+	/* Full-width textarea */
+	.form-container textarea {
+	  width: 100%;
+	  padding: 15px;
+	  margin: 5px 0 22px 0;
+	  border: none;
+	  background: #f1f1f1;
+	  resize: none;
+	  min-height: 200px;
+	}
+	
+	/* When the textarea gets focus, do something */
+	.form-container textarea:focus {
+	  background-color: #ddd;
+	  outline: none;
+	}
+</style>

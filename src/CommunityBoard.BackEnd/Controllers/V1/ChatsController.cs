@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CommunityBoard.BackEnd.Contracts.V1;
 using CommunityBoard.BackEnd.Extensions;
 using CommunityBoard.BackEnd.Utilities;
+using CommunityBoard.Core.DTOs.Responses;
 using CommunityBoard.Core.Interfaces.Repositories;
 using CommunityBoard.Core.Models.CommunicationModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -41,18 +42,32 @@ namespace CommunityBoard.BackEnd.Controllers.V1
         {
             try
             {
-                //TODO: Add validation to make sure chat is not created twice
-                var chat = new Chat();
                 var rootUserId = HttpContext.GetUserId();
+                var (item1, item2) = await _chatsRepository.UsersHaveChat(rootUserId, userId);
+                
+                //Correct? Might change this?
+                //This works but...is it good practice?
+                if (item1)
+                    return Ok(new ChatResponse
+                    {
+                        Message = "Chat already exists.",
+                        Code = 200,
+                        Errors = new[] { "Chat could not be created" },
+                        Id = item2.Id
+                    });
+                
+                var chat = new Chat();
                 await _chatsRepository.CreateUserChat(chat, rootUserId, userId);
                 
                 var baseUrl = HttpContext.GetBaseURL();
                 var locationUri = baseUrl + ApiRoutes.Chats.GetChat.Replace("{chatId}", chat.Id.ToString());
-                return Created(locationUri, new
+
+                return Created(locationUri, new ChatResponse
                 {
-                    Created = true,
                     Message = "Chat successfully created.",
-                    ChatId = chat.Id
+                    Code = 201,
+                    Errors = null,
+                    Id = chat.Id
                 });
             }
             catch (ArgumentNullException)
@@ -66,8 +81,8 @@ namespace CommunityBoard.BackEnd.Controllers.V1
         {
             try
             {
-                var rootUserId = HttpContext.GetUserId();
-                return Ok(await _chatsRepository.GetAllUserChats(rootUserId));
+                var userId = HttpContext.GetUserId();
+                return Ok(await _chatsRepository.FindAllUserChatsAsync(userId));
             }
             catch (ArgumentNullException)
             {

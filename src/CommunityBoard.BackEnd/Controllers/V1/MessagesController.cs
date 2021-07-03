@@ -31,6 +31,9 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             [FromRoute] int chatId, 
             [FromBody] CreateMessageDto createMessageDto)
         {
+            if (string.IsNullOrEmpty(createMessageDto.Text))
+                return BadRequest(new { Message = "Message cannot be empty." });
+            
             var message = new Message
             {
                 Text = createMessageDto.Text,
