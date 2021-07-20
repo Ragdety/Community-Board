@@ -27,6 +27,7 @@
             public const string Create = Base + "/announcements/{announcementId}/reports";
             public const string GetAll = Base + "/reports";
             public const string Get = Base + "/reports/{reportId}";
+            public const string Update = Base + "/reports/{reportId}";
             public const string Delete = Base + "/reports/{reportId}";
 
             //Extra

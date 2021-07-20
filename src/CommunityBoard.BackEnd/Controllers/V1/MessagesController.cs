@@ -32,7 +32,7 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             [FromBody] CreateMessageDto createMessageDto)
         {
             if (string.IsNullOrEmpty(createMessageDto.Text))
-                return BadRequest(new { Message = "Message cannot be empty." });
+                return BadRequest(new { Error = "Message cannot be empty." });
             
             var message = new Message
             {
@@ -44,7 +44,7 @@ namespace CommunityBoard.BackEnd.Controllers.V1
 
             await _messagesRepository.CreateAsync(message);
             
-            //SignalR stuff for realtime functionality here:
+            //SignalR for realtime functionality here:
             await _chat.Clients
                 .Group(chatId.ToString())
                 .SendAsync("ReceiveMessage", new

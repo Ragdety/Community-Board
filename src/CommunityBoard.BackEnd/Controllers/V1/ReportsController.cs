@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using CommunityBoard.BackEnd.Contracts.V1;
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.DTOs.Responses;
@@ -17,16 +19,21 @@ namespace CommunityBoard.BackEnd.Controllers.V1
     public class ReportsController : Controller
     {
         private readonly IReportsRepository _reportsRepository;
+        private readonly IMapper _mapper;
 
-		public ReportsController(IReportsRepository reportsRepository)
-		{
-			_reportsRepository = reportsRepository;
-		}
+        public ReportsController(
+            IReportsRepository reportsRepository,
+            IMapper mapper)
+        {
+            _reportsRepository = reportsRepository;
+            _mapper = mapper;
+        }
 
 		[HttpGet(ApiRoutes.Reports.GetAll)]
         public async Task<IActionResult> GetAll()
-		{
-            return Ok(await _reportsRepository.FindAllAsync());
+        {
+            var reports = await _reportsRepository.FindAllAsync(); 
+            return Ok(_mapper.Map<List<Report>>(reports));
 		}
 
         [HttpGet(ApiRoutes.Reports.Get)]
@@ -37,13 +44,14 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             if (report == null)
                 return NotFound(new { Error = "Report was not found" });
 
-            return Ok(report);
+            return Ok(_mapper.Map<Report>(report));
         }
 
         [HttpGet(ApiRoutes.Reports.GetAllFromAnnouncement)]
         public async Task<IActionResult> GetAllFromAnnouncement([FromRoute] int announcementId)
         {
-            return Ok(await _reportsRepository.FindAllReportsFromAnnouncement(announcementId));
+            var reports = await _reportsRepository.FindAllReportsFromAnnouncement(announcementId);
+            return Ok(_mapper.Map<List<Report>>(reports));
         }
 
         [AllowAnonymous]
@@ -64,9 +72,7 @@ namespace CommunityBoard.BackEnd.Controllers.V1
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationUri = baseUrl + ApiRoutes.Reports.Get.Replace("{reportId}", report.Id.ToString());
-            var response = new ReportResponse { Id = report.Id };
-
-            return Created(locationUri, response);
+            return Created(locationUri, _mapper.Map<Report>(report));
         }
 
         [HttpDelete(ApiRoutes.Reports.Delete)]
@@ -81,6 +87,10 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             return NotFound(new { Error = "Report was not found." });
         }
 
-        //For now update not available
+        [HttpPut(ApiRoutes.Reports.Update)]
+        public Task<IActionResult> Update([FromBody] CreateReportDto reportDto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

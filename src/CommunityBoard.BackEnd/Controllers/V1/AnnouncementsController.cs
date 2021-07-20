@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using CommunityBoard.BackEnd.Contracts.V1;
 using CommunityBoard.BackEnd.Utilities;
 using CommunityBoard.Core.DTOs;
@@ -17,10 +19,14 @@ namespace CommunityBoard.BackEnd.Controllers.V1
     public class AnnouncementsController : Controller
     {
         private readonly IAnnouncementsRepository _announcementRepository;
+        private readonly IMapper _mapper;
 
-        public AnnouncementsController(IAnnouncementsRepository announcementRepository)
+        public AnnouncementsController(
+            IAnnouncementsRepository announcementRepository, 
+            IMapper mapper)
         {
             _announcementRepository = announcementRepository;
+            _mapper = mapper;
         }
 
         [HttpPost(ApiRoutes.Announcements.Create)]
@@ -51,10 +57,9 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             //https://localhost:5001 in this case
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationUri = baseUrl + ApiRoutes.Announcements.Get.Replace("{id}", announcement.Id.ToString());
-            var response = new AnnouncementResponse { Id = announcement.Id };
 
             //201 - Created
-            return Created(locationUri, response);
+            return Created(locationUri, _mapper.Map<Announcement, AnnouncementResponse>(announcement));
         }
 
 
@@ -62,7 +67,8 @@ namespace CommunityBoard.BackEnd.Controllers.V1
         [HttpGet(ApiRoutes.Announcements.GetAll)]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _announcementRepository.FindAllAsync());
+            var announcements = await _announcementRepository.FindAllAsync();
+            return Ok(_mapper.Map<List<AnnouncementResponse>>(announcements));
         }
 
         [AllowAnonymous]
@@ -72,14 +78,16 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             var announcement = await _announcementRepository.FindByIdAsync(announcementId);
             if (announcement == null)
                 return NotFound(new { Error = "Announcement was not found." });
-            return Ok(announcement);
+            return Ok(_mapper.Map<AnnouncementResponse>(announcement));
         }
 
         [AllowAnonymous]
         [HttpGet(ApiRoutes.Announcements.GetByName)]
         public async Task<IActionResult> GetByName([FromRoute] string announcementName)
-		{
-            return Ok(await _announcementRepository.FindAnnouncementsByName(announcementName));
+        {
+            var announcement = 
+                await _announcementRepository.FindAnnouncementsByName(announcementName);
+            return Ok(_mapper.Map<AnnouncementResponse>(announcement));
 		}
 
         [HttpPut(ApiRoutes.Announcements.Update)]
@@ -102,7 +110,7 @@ namespace CommunityBoard.BackEnd.Controllers.V1
 
             var updated = await _announcementRepository.UpdateAsync(announcement);
             if (updated)
-                return Ok(announcement);
+                return Ok(_mapper.Map<AnnouncementResponse>(announcement));
 
             return NotFound(new { Error = "Announcement was not found." });
         }
@@ -144,7 +152,7 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             if (announcements == null)
                 return NotFound();
 
-            return Ok(announcements);
+            return Ok(_mapper.Map<List<AnnouncementResponse>>(announcements));
         }
     }
 }
