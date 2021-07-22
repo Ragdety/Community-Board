@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CommunityBoard.BackEnd.Data;
 using CommunityBoard.Core.Interfaces.Repositories;
+using CommunityBoard.Core.Models.Filters;
 using Microsoft.EntityFrameworkCore;
 
 namespace CommunityBoard.BackEnd.Repositories
@@ -22,7 +23,7 @@ namespace CommunityBoard.BackEnd.Repositories
             return created > 0;
         }
 
-        public virtual async Task<IList<TEntity>> FindAllAsync()
+        public virtual async Task<IList<TEntity>> FindAllAsync(PaginationFilter paginationFilter = null)
         {
             return await _db
                 .Set<TEntity>()

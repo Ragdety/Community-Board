@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using CommunityBoard.Core.DTOs.Responses;
 
 namespace CommunityBoard.FrontEnd.Services.V1
 {
@@ -30,7 +31,8 @@ namespace CommunityBoard.FrontEnd.Services.V1
                 !response.IsSuccessStatusCode)
                 return null;
 
-            return await response.Content.ReadAsAsync<List<Announcement>>();
+            var content = await response.Content.ReadAsAsync<Response<List<Announcement>>>();
+            return content.Data;
         }
 
         public async Task<List<Announcement>> GetAnnouncementsByNameAsync(string name)
@@ -42,8 +44,9 @@ namespace CommunityBoard.FrontEnd.Services.V1
             if (response.StatusCode == HttpStatusCode.NotFound)
                 return null;
 
-            return await response.Content.ReadAsAsync<List<Announcement>>();
-		}
+            var content = await response.Content.ReadAsAsync<Response<List<Announcement>>>();
+            return content.Data;
+        }
 
         public async Task<Tuple<List<Announcement>, string>> 
             GetUserAnnouncementsAsync()
@@ -66,8 +69,8 @@ namespace CommunityBoard.FrontEnd.Services.V1
                     null, "Something went wrong when retrieving announcements");
             }
 
-            return new Tuple<List<Announcement>, string>(
-                await response.Content.ReadAsAsync<List<Announcement>>(),"");
+            var content = await response.Content.ReadAsAsync<Response<List<Announcement>>>();
+            return new Tuple<List<Announcement>, string>(content.Data,"");
         }
 
         public async Task<bool> CreateAnnouncementAsync(CreateAnnouncementDto announcement)
@@ -93,7 +96,8 @@ namespace CommunityBoard.FrontEnd.Services.V1
                 !response.IsSuccessStatusCode)
                 return null;
 
-            return await response.Content.ReadAsAsync<Announcement>();
+            var content = await response.Content.ReadAsAsync<Response<Announcement>>();
+            return content.Data;
         }
 
         public async Task<bool> UpdateAnnouncementAsync(int id, UpdateAnnouncementDto announcement)

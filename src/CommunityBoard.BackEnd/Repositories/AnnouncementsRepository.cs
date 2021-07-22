@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CommunityBoard.Core.Models.Filters;
 
 namespace CommunityBoard.BackEnd.Repositories
 {
@@ -18,10 +19,20 @@ namespace CommunityBoard.BackEnd.Repositories
             _announcements = db.Set<Announcement>();
         }
 
-        public override async Task<IList<Announcement>> FindAllAsync()
+        public override async Task<IList<Announcement>> FindAllAsync(PaginationFilter paginationFilter = null)
         {
+            if (paginationFilter == null)
+            {
+                return await  _announcements
+                    .OrderByDescending(x => x.CreatedAt)
+                    .ToListAsync();
+            }
+
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
             return await  _announcements
                 .OrderByDescending(x => x.CreatedAt)
+                .Skip(skip)
+                .Take(paginationFilter.PageSize)
                 .ToListAsync();
         }
 
@@ -54,7 +65,9 @@ namespace CommunityBoard.BackEnd.Repositories
         public async Task<bool> UserOwnsAnnouncementAsync(int announcementId, int userId)
         {
             var announcement = 
-                await _announcements.AsNoTracking().SingleOrDefaultAsync(a => a.Id == announcementId);
+                await _announcements
+                .AsNoTracking()
+                .SingleOrDefaultAsync(a => a.Id == announcementId);
 
             if (announcement == null)
                 return false;

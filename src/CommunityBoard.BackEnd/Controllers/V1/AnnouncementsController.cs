@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CommunityBoard.BackEnd.Contracts.V1;
 using CommunityBoard.BackEnd.Utilities;
+using CommunityBoard.BackEnd.Utilities.Helpers;
+using CommunityBoard.Core.Contracts.Requests.Queries;
 using CommunityBoard.Core.DTOs;
 using CommunityBoard.Core.DTOs.Responses;
 using CommunityBoard.Core.Enums;
 using CommunityBoard.Core.Interfaces.Repositories;
+using CommunityBoard.Core.Interfaces.Services;
 using CommunityBoard.Core.Models.CoreModels;
+using CommunityBoard.Core.Models.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +25,16 @@ namespace CommunityBoard.BackEnd.Controllers.V1
     {
         private readonly IAnnouncementsRepository _announcementRepository;
         private readonly IMapper _mapper;
+        private readonly IUriService _uriService;
 
         public AnnouncementsController(
             IAnnouncementsRepository announcementRepository, 
-            IMapper mapper)
+            IMapper mapper, 
+            IUriService uriService)
         {
             _announcementRepository = announcementRepository;
             _mapper = mapper;
+            _uriService = uriService;
         }
 
         [HttpPost(ApiRoutes.Announcements.Create)]
@@ -54,10 +62,8 @@ namespace CommunityBoard.BackEnd.Controllers.V1
 
             await _announcementRepository.CreateAsync(announcement);
 
-            //https://localhost:5001 in this case
-            var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-            var locationUri = baseUrl + ApiRoutes.Announcements.Get.Replace("{id}", announcement.Id.ToString());
-
+            var locationUri = _uriService.GetAnnouncementUri(announcement.Id.ToString());
+            
             //201 - Created
             return Created(locationUri, _mapper.Map<Announcement, AnnouncementResponse>(announcement));
         }
@@ -65,10 +71,22 @@ namespace CommunityBoard.BackEnd.Controllers.V1
 
         [AllowAnonymous] //Anyone can view all announcements
         [HttpGet(ApiRoutes.Announcements.GetAll)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
         {
-            var announcements = await _announcementRepository.FindAllAsync();
-            return Ok(_mapper.Map<List<AnnouncementResponse>>(announcements));
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var announcements = await _announcementRepository.FindAllAsync(pagination);
+            var announcementResponse = _mapper.Map<List<AnnouncementResponse>>(announcements);
+
+            if (pagination == null || 
+                pagination.PageNumber < 1 || 
+                pagination.PageSize < 1)
+            {
+                return Ok(new PagedResponse<AnnouncementResponse>(announcementResponse));
+            }
+
+            var paginationResponse =
+                PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, announcementResponse);
+            return Ok(paginationResponse);
         }
 
         [AllowAnonymous]
@@ -78,7 +96,9 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             var announcement = await _announcementRepository.FindByIdAsync(announcementId);
             if (announcement == null)
                 return NotFound(new { Error = "Announcement was not found." });
-            return Ok(_mapper.Map<AnnouncementResponse>(announcement));
+            return Ok(new Response<AnnouncementResponse>(
+                _mapper.Map<AnnouncementResponse>(announcement))
+            );
         }
 
         [AllowAnonymous]
@@ -87,7 +107,9 @@ namespace CommunityBoard.BackEnd.Controllers.V1
         {
             var announcement = 
                 await _announcementRepository.FindAnnouncementsByName(announcementName);
-            return Ok(_mapper.Map<AnnouncementResponse>(announcement));
+            return Ok(new Response<AnnouncementResponse>(
+                _mapper.Map<AnnouncementResponse>(announcement))
+            );
 		}
 
         [HttpPut(ApiRoutes.Announcements.Update)]
@@ -152,7 +174,9 @@ namespace CommunityBoard.BackEnd.Controllers.V1
             if (announcements == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<List<AnnouncementResponse>>(announcements));
+            return Ok(new Response<List<AnnouncementResponse>>( 
+                _mapper.Map<List<AnnouncementResponse>>(announcements))
+            );
         }
     }
 }
